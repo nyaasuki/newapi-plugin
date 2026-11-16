@@ -1,6 +1,6 @@
 ---
 changelogVersion: 1
-plugin: "decision"
+plugin: "nyaasuki_decision"
 version: "1.0.0"
 locale: "zh-CN"
 ---
@@ -22,4 +22,4 @@ locale: "zh-CN"
 ### Migration
 
 - 提供模型前先为它定价，使用任务用量表达式计费。按 OpenRouter 标价，`d1.1` 为 `tier("base", u("input_tokens") * 0.02 / 1000000)`，`jev-1.14` 为 `tier("base", u("input_tokens") * 0.042 / 1000000)`。如果想按 OpenRouter 实际收费计费（含按次费用和联网搜索费用），使用 `tier("base", u("upstream_cost"))`。
-- 如果同时安装了 TypeSafe 插件，两个插件都声明了 `jev-latest`，会共用它的模型级价格。要给本插件单独定价，请为 `decision::jev-latest` 设置渠道插件价格。
+- 如果同时安装了 TypeSafe 插件，两个插件都声明了 `jev-latest`，会共用它的模型级价格。要给本插件单独定价，请为 `nyaasuki_decision::jev-latest` 设置渠道插件价格。

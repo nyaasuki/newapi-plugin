@@ -1,14 +1,14 @@
 // Replays golden.json against plugin.js the way `new-api plugin test` does
-// for top-level hooks. Run: node test/golden.mjs
+// for top-level hooks. Run: node test/apimart/golden.mjs
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 import path from "node:path";
 
 globalThis.utils = { unixNow: () => 1780000000, uuid: () => "uuid" };
-const root = path.resolve(import.meta.dirname, "..");
-const plugin = await import(pathToFileURL(path.join(root, "plugins/tasks/apimart/1.1.0/plugin.js")).href);
-const { cases } = JSON.parse(readFileSync(path.join(root, "golden.json"), "utf8"));
+const root = path.resolve(import.meta.dirname, "..", "..");
+const plugin = await import(pathToFileURL(path.join(root, "plugins/tasks/nyaasuki_apimart/1.2.0/plugin.js")).href);
+const { cases } = JSON.parse(readFileSync(path.join(import.meta.dirname, "golden.json"), "utf8"));
 
 let passed = 0;
 for (const c of cases) {

@@ -8,7 +8,7 @@ Answers typed questions about text, data or media with any decision model on Ope
 
 ## Channel setup
 
-- Choose the Task Plugin (61) channel type and bind the OpenRouter Decision plugin.
+- Choose the Task Plugin (61) channel type and bind the OpenRouter Decision plugin (key `nyaasuki_decision`).
 - The key is an OpenRouter API key. See the [Decisions API reference](https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-request).
 - Leave the API address empty to use `https://openrouter.ai`. An address ending in `/api` or `/api/v1` also works.
 - Add the models you want to offer to the channel, by their New API names below. Model permissions and groups work as on any other channel.
@@ -68,7 +68,7 @@ The plugin serves the 40 models that OpenRouter's catalog listed for the Decisio
 
 `cloudflare/clairic` is in the catalog but serves only the Extractions API, so the plugin leaves it out. OpenRouter lists `liquid/d1` as expiring on 2026-11-20.
 A model outside this list, including a full OpenRouter ID such as `liquid/d1.1`, gets a 400 error from the gateway and never reaches OpenRouter.
-The TypeSafe plugin also declares `jev-latest`. When both plugins are installed, the model-level price of `jev-latest` applies to both; set a provider price for `decision::jev-latest` to price this plugin's calls separately.
+The TypeSafe plugin also declares `jev-latest`. When both plugins are installed, the model-level price of `jev-latest` applies to both; set a provider price for `nyaasuki_decision::jev-latest` to price this plugin's calls separately.
 
 Questions use the types `choice`, `noul` and `score`. Jev also answers `box`. Which question types, media parts and `state` shapes a model accepts is up to that model; OpenRouter answers anything else with a 400.
 Errors reach the client as `{"error": {"code", "message"}}`, as OpenRouter writes them. A 4xx error from OpenRouter keeps its status and message. A 5xx error keeps its status, and the gateway replaces the message with a generic one.

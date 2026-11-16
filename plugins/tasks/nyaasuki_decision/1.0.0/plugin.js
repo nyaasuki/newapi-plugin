@@ -6,8 +6,8 @@
 // and returns OpenRouter's reply, with the model named as the client called it.
 
 // BEGIN GENERATED MODEL CATALOG
-// Written by tools/sync-models.mjs from https://openrouter.ai/api/v1/models?output_modalities=decisions.
-// Do not edit by hand; run the sync script and release a new version.
+// Written by tools/decision/sync-models.mjs from https://openrouter.ai/api/v1/models?output_modalities=decisions.
+// Do not edit by hand; run tools/decision/sync-models.mjs and release a new version.
 // Keyed by the model name New API shows and bills. Each entry: the
 // OpenRouter model ID, context length in tokens, and OpenRouter list
 // prices in USD per input token, per request, and per web search.
@@ -84,12 +84,12 @@ const USAGE_SCHEMA = {
 
 export const meta = {
   apiVersion: 1,
-  key: "decision",
+  key: "nyaasuki_decision",
   name: "OpenRouter Decision",
   sortPriority: 80,
   version: "1.0.0",
   icon: "OpenRouter",
-  author: { name: "nyaasuki", url: "https://github.com/nyaasuki/newapi-OpenRouter-Decision" },
+  author: { name: "nyaasuki", url: "https://github.com/nyaasuki/newapi-plugin" },
   website: "https://openrouter.ai/models?output_modalities=decisions",
   description: {
     en: "Typed decisions from every OpenRouter decision model, chosen by model",

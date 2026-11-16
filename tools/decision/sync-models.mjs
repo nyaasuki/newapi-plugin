@@ -2,12 +2,12 @@
 // Syncs the OpenRouter Decision plugin's model whitelist with OpenRouter's
 // official decision model catalog.
 //
-//   node tools/sync-models.mjs            rewrite the catalog block in plugin.js
-//   node tools/sync-models.mjs --check    report differences, exit 1 if any
+//   node tools/decision/sync-models.mjs            rewrite the catalog block in plugin.js
+//   node tools/decision/sync-models.mjs --check    report differences, exit 1 if any
 //
 // Options:
 //   --plugin <path>   plugin.js to update (default: newest version under
-//                     plugins/tasks/decision)
+//                     plugins/tasks/nyaasuki_decision)
 //   --from <url|file> catalog source (default: the official catalog JSON)
 //   --date <date>     snapshot date written into the block (default: today, UTC)
 //
@@ -17,8 +17,8 @@
 // named by its OpenRouter ID without the vendor prefix (liquid/d1.1 is d1.1);
 // the plugin sends the full ID to OpenRouter.
 //
-// Also writes tools/models.snapshot.json (the catalog subset used) and
-// tools/pricing.suggested.json (billing expressions from list prices).
+// Also writes tools/decision/models.snapshot.json (the catalog subset used) and
+// tools/decision/pricing.suggested.json (billing expressions from list prices).
 
 import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
@@ -29,7 +29,7 @@ const DECISIONS_ENDPOINT = "/api/alpha/decisions";
 const BEGIN = "// BEGIN GENERATED MODEL CATALOG";
 const END = "// END GENERATED MODEL CATALOG";
 const here = dirname(fileURLToPath(import.meta.url));
-const root = resolve(here, "..");
+const root = resolve(here, "..", "..");
 
 function parseArgs(argv) {
   const args = { check: false, plugin: null, from: DEFAULT_SOURCE, date: new Date().toISOString().slice(0, 10) };
@@ -55,7 +55,7 @@ function compareSemver(a, b) {
 }
 
 function defaultPluginPath() {
-  const dir = join(root, "plugins", "tasks", "decision");
+  const dir = join(root, "plugins", "tasks", "nyaasuki_decision");
   const versions = readdirSync(dir).filter((name) => /^\d+\.\d+\.\d+/.test(name) && existsSync(join(dir, name, "plugin.js")));
   if (versions.length === 0) throw new Error("No plugin version found under " + dir);
   versions.sort(compareSemver);
@@ -156,8 +156,8 @@ function shortName(id) {
 function renderBlock(models, date, source) {
   const lines = [
     BEGIN,
-    "// Written by tools/sync-models.mjs from " + source + ".",
-    "// Do not edit by hand; run the sync script and release a new version.",
+    "// Written by tools/decision/sync-models.mjs from " + source + ".",
+    "// Do not edit by hand; run tools/decision/sync-models.mjs and release a new version.",
     "// Keyed by the model name New API shows and bills. Each entry: the",
     "// OpenRouter model ID, context length in tokens, and OpenRouter list",
     "// prices in USD per input token, per request, and per web search.",
@@ -253,7 +253,7 @@ async function main() {
     const strip = (text) => text.replace(/^const CATALOG_SNAPSHOT = .*$/m, "").replace(/^\/\/ Written by .*$/m, "");
     const fresh = renderBlock(kept, args.date, sourceLabel);
     if (strip(fresh) !== strip(current.text)) {
-      console.log("whitelist or prices differ from the catalog: run node tools/sync-models.mjs and release a new version");
+      console.log("whitelist or prices differ from the catalog: run node tools/decision/sync-models.mjs and release a new version");
       process.exit(1);
     }
     console.log("whitelist matches the catalog");
@@ -266,7 +266,7 @@ async function main() {
     join(here, "models.snapshot.json"),
     JSON.stringify({ snapshot: args.date, source: sourceLabel, endpoint: DECISIONS_ENDPOINT, models: kept, excluded }, null, 2) + "\n",
   );
-  writeFileSync(join(here, "pricing.suggested.json"), JSON.stringify({ snapshot: args.date, plugin: "decision", models: suggestedPricing(kept) }, null, 2) + "\n");
+  writeFileSync(join(here, "pricing.suggested.json"), JSON.stringify({ snapshot: args.date, plugin: "nyaasuki_decision", models: suggestedPricing(kept) }, null, 2) + "\n");
   console.log("updated " + pluginPath);
   if (added.length || removed.length) console.log("The whitelist changed: release it as a new plugin version with a changelog.");
 }

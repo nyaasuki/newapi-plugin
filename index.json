@@ -1,9 +1,9 @@
 {
   "indexVersion": 1,
-  "name": "APIMart Plugins for New API",
+  "name": "nyaasuki New API Plugins",
   "plugins": [
     {
-      "key": "apimart",
+      "key": "nyaasuki_apimart",
       "name": "APIMart",
       "icon": "text:AM",
       "website": "https://apimart.ai",
@@ -11,7 +11,7 @@
         "en": "APIMart image models: GPT-Image, Nano Banana, Imagen, Seedream, FLUX, Qwen, Wan, Grok Imagine and more",
         "zh": "APIMart 图像模型：GPT-Image、Nano Banana、Imagen、Seedream、FLUX、Qwen、万相、Grok Imagine 等"
       },
-      "routes": null,
+      "routes": [],
       "protocols": [
         {
           "name": "openai_image"
@@ -86,16 +86,6 @@
                 "zh": "生成图片单价"
               }
             },
-            "version": {
-              "enum": [
-                "flare",
-                "sunburst"
-              ],
-              "description": {
-                "en": "Model version",
-                "zh": "模型版本"
-              }
-            },
             "resolution": {
               "enum": [
                 "1k",
@@ -117,6 +107,16 @@
                   "en": "4K"
                 }
               }
+            },
+            "version": {
+              "enum": [
+                "flare",
+                "sunburst"
+              ],
+              "description": {
+                "en": "Model version",
+                "zh": "模型版本"
+              }
             }
           },
           "examples": [
@@ -124,24 +124,24 @@
               "label": "flare · 1K · 1 image",
               "facts": {
                 "image_count": 1,
-                "version": "flare",
-                "resolution": "1k"
+                "resolution": "1k",
+                "version": "flare"
               }
             },
             {
               "label": "flare · 2K · 1 image",
               "facts": {
                 "image_count": 1,
-                "version": "flare",
-                "resolution": "2k"
+                "resolution": "2k",
+                "version": "flare"
               }
             },
             {
               "label": "flare · 4K · 1 image",
               "facts": {
                 "image_count": 1,
-                "version": "flare",
-                "resolution": "4k"
+                "resolution": "4k",
+                "version": "flare"
               }
             }
           ]
@@ -229,17 +229,6 @@
                 "zh": "生成图片单价"
               }
             },
-            "size": {
-              "enum": [
-                "1:1",
-                "3:2",
-                "2:3"
-              ],
-              "description": {
-                "en": "Image size",
-                "zh": "图片尺寸"
-              }
-            },
             "quality": {
               "enum": [
                 "auto",
@@ -251,6 +240,17 @@
                 "en": "Quality tier",
                 "zh": "质量档位"
               }
+            },
+            "size": {
+              "enum": [
+                "1:1",
+                "3:2",
+                "2:3"
+              ],
+              "description": {
+                "en": "Image size",
+                "zh": "图片尺寸"
+              }
             }
           },
           "examples": [
@@ -258,8 +258,8 @@
               "label": "1:1 · auto · 1 image",
               "facts": {
                 "image_count": 1,
-                "size": "1:1",
-                "quality": "auto"
+                "quality": "auto",
+                "size": "1:1"
               }
             }
           ]
@@ -499,6 +499,14 @@
                 "zh": "生成图片单价"
               }
             },
+            "reference_images": {
+              "type": "number",
+              "unit": "count",
+              "description": {
+                "en": "Reference image unit price",
+                "zh": "参考图单价"
+              }
+            },
             "resolution": {
               "enum": [
                 "1k",
@@ -510,23 +518,15 @@
                 "zh": "分辨率档位"
               },
               "enumLabels": {
-                "1k": {
-                  "en": "1K"
-                },
                 "1.5k": {
                   "en": "1.5K"
+                },
+                "1k": {
+                  "en": "1K"
                 },
                 "2k": {
                   "en": "2K"
                 }
-              }
-            },
-            "reference_images": {
-              "type": "number",
-              "unit": "count",
-              "description": {
-                "en": "Reference image unit price",
-                "zh": "参考图单价"
               }
             }
           },
@@ -535,24 +535,24 @@
               "label": "1K · 1 image",
               "facts": {
                 "image_count": 1,
-                "resolution": "1k",
-                "reference_images": 0
+                "reference_images": 0,
+                "resolution": "1k"
               }
             },
             {
               "label": "1.5K · 1 image",
               "facts": {
                 "image_count": 1,
-                "resolution": "1.5k",
-                "reference_images": 0
+                "reference_images": 0,
+                "resolution": "1.5k"
               }
             },
             {
               "label": "2K · 1 image",
               "facts": {
                 "image_count": 1,
-                "resolution": "2k",
-                "reference_images": 0
+                "reference_images": 0,
+                "resolution": "2k"
               }
             }
           ]
@@ -657,20 +657,20 @@
                 "zh": "分辨率档位"
               },
               "enumLabels": {
-                "768sq": {
-                  "en": "768sq"
+                "1.5k": {
+                  "en": "1.5K"
                 },
                 "1k": {
                   "en": "1K"
-                },
-                "1.5k": {
-                  "en": "1.5K"
                 },
                 "2k": {
                   "en": "2K"
                 },
                 "4k": {
                   "en": "4K"
+                },
+                "768sq": {
+                  "en": "768sq"
                 }
               }
             }
@@ -780,6 +780,13 @@
                 "zh": "生成图片单价"
               }
             },
+            "prompt_extend": {
+              "type": "boolean",
+              "description": {
+                "en": "Prompt rewriting enabled",
+                "zh": "开启智能改写"
+              }
+            },
             "resolution": {
               "enum": [
                 "1k",
@@ -797,13 +804,6 @@
                   "en": "2K"
                 }
               }
-            },
-            "prompt_extend": {
-              "type": "boolean",
-              "description": {
-                "en": "Prompt rewriting enabled",
-                "zh": "开启智能改写"
-              }
             }
           },
           "examples": [
@@ -811,16 +811,16 @@
               "label": "1K · 1 image",
               "facts": {
                 "image_count": 1,
-                "resolution": "1k",
-                "prompt_extend": false
+                "prompt_extend": false,
+                "resolution": "1k"
               }
             },
             {
               "label": "2K · 1 image",
               "facts": {
                 "image_count": 1,
-                "resolution": "2k",
-                "prompt_extend": false
+                "prompt_extend": false,
+                "resolution": "2k"
               }
             }
           ]
@@ -839,6 +839,14 @@
                 "zh": "生成图片单价"
               }
             },
+            "reference_images": {
+              "type": "number",
+              "unit": "count",
+              "description": {
+                "en": "Reference image unit price",
+                "zh": "参考图单价"
+              }
+            },
             "resolution": {
               "enum": [
                 "1k",
@@ -856,14 +864,6 @@
                   "en": "2K"
                 }
               }
-            },
-            "reference_images": {
-              "type": "number",
-              "unit": "count",
-              "description": {
-                "en": "Reference image unit price",
-                "zh": "参考图单价"
-              }
             }
           },
           "examples": [
@@ -871,16 +871,16 @@
               "label": "1K · 1 image",
               "facts": {
                 "image_count": 1,
-                "resolution": "1k",
-                "reference_images": 0
+                "reference_images": 0,
+                "resolution": "1k"
               }
             },
             {
               "label": "2K · 1 image",
               "facts": {
                 "image_count": 1,
-                "resolution": "2k",
-                "reference_images": 0
+                "reference_images": 0,
+                "resolution": "2k"
               }
             }
           ]
@@ -896,24 +896,6 @@
               "description": {
                 "en": "Generated image unit price",
                 "zh": "生成图片单价"
-              }
-            },
-            "resolution": {
-              "enum": [
-                "1k",
-                "2k"
-              ],
-              "description": {
-                "en": "Resolution tier",
-                "zh": "分辨率档位"
-              },
-              "enumLabels": {
-                "1k": {
-                  "en": "1K"
-                },
-                "2k": {
-                  "en": "2K"
-                }
               }
             },
             "quality": {
@@ -933,6 +915,24 @@
                 "en": "Reference image unit price",
                 "zh": "参考图单价"
               }
+            },
+            "resolution": {
+              "enum": [
+                "1k",
+                "2k"
+              ],
+              "description": {
+                "en": "Resolution tier",
+                "zh": "分辨率档位"
+              },
+              "enumLabels": {
+                "1k": {
+                  "en": "1K"
+                },
+                "2k": {
+                  "en": "2K"
+                }
+              }
             }
           },
           "examples": [
@@ -940,18 +940,18 @@
               "label": "1K · medium · 1 image",
               "facts": {
                 "image_count": 1,
-                "resolution": "1k",
                 "quality": "medium",
-                "reference_images": 0
+                "reference_images": 0,
+                "resolution": "1k"
               }
             },
             {
               "label": "2K · medium · 1 image",
               "facts": {
                 "image_count": 1,
-                "resolution": "2k",
                 "quality": "medium",
-                "reference_images": 0
+                "reference_images": 0,
+                "resolution": "2k"
               }
             }
           ]
@@ -1014,31 +1014,217 @@
         "grok-imagine-image-2.0",
         "grok-imagine-2.0-ext"
       ],
-      "latest": "1.1.0",
+      "task": true,
+      "provider": false,
+      "transform": false,
+      "latest": "1.2.0",
+      "versions": [
+        {
+          "version": "1.2.0",
+          "path": "plugins/tasks/nyaasuki_apimart/1.2.0/plugin.js",
+          "sha256": "7be2cdb9a4f1c905d8013bafaf0f96dd8803241b75976cb945dcbd778eb0caf2",
+          "minApiVersion": 1,
+          "kind": "task",
+          "allowedHosts": [
+            "upload.apimart.ai"
+          ],
+          "baseUrl": "https://api.apimart.ai",
+          "auth": "api_key",
+          "readme": {
+            "path": "plugins/tasks/nyaasuki_apimart/README.md",
+            "sha256": "37cac63e76b81dd7fecb131cb44428d89e4d9d3f24dbcc129637ef78a406d114",
+            "translations": {
+              "zh-CN": {
+                "path": "plugins/tasks/nyaasuki_apimart/README.zh-CN.md",
+                "sha256": "33c938933b8d6113857b899d163c598617c399d4ac93a80f2808ce8b9b505021"
+              }
+            }
+          },
+          "changelog": {
+            "path": "plugins/tasks/nyaasuki_apimart/1.2.0/CHANGELOG.md",
+            "sha256": "e69fec51c5540756ab6d62977800ec3df46b4e2df7d400bbfcc2317610656b2b",
+            "translations": {
+              "zh-CN": {
+                "path": "plugins/tasks/nyaasuki_apimart/1.2.0/CHANGELOG.zh-CN.md",
+                "sha256": "e9e7be06fc538ef15c618600be872bb6fbcf2b8889d8b6322bc26304c4cd9fa9"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "nyaasuki_decision",
+      "name": "OpenRouter Decision",
+      "icon": "OpenRouter",
+      "website": "https://openrouter.ai/models?output_modalities=decisions",
+      "sortPriority": 80,
+      "description": {
+        "en": "Typed decisions from every OpenRouter decision model, chosen by model",
+        "zh": "通过 OpenRouter 调用全部决策模型，按 model 切换，返回结构化判断"
+      },
+      "routes": [
+        {
+          "method": "POST",
+          "path": "/decision/v1/systemone",
+          "type": "submit",
+          "decode": "decodeDecision",
+          "render": "renderDecision",
+          "retainResult": false,
+          "models": [
+            "classify-1",
+            "clef",
+            "clef-flash",
+            "clef-omni",
+            "d1",
+            "d1-latest",
+            "d1-ultra",
+            "d1-ultra-latest",
+            "d1.1",
+            "decisions-fast",
+            "drex-max",
+            "drex-max-finance",
+            "drex-v1.5",
+            "drex-v2.0",
+            "elephant-1",
+            "gemini-decision-1",
+            "gpt-6-luna-decisions",
+            "heygen-decision-1",
+            "heygen-decision-1-turbo",
+            "jev-1.13",
+            "jev-1.14",
+            "jev-latest",
+            "joey-1",
+            "kev-4b",
+            "mammoth-1",
+            "microsoft-decision-1",
+            "pplx-decider-flash-latest",
+            "pplx-decider-flash-v1.2",
+            "pplx-decider-flash-v1.3:free",
+            "pplx-decider-latest",
+            "pplx-decider-v1.2",
+            "pplx-decider-v1.3:free",
+            "reflex",
+            "solar-decide",
+            "solar-decide-flash",
+            "span-01",
+            "span-01-lite",
+            "span-01-lite:free",
+            "span-02",
+            "tev1-4b-experimental"
+          ]
+        }
+      ],
+      "usageSchema": {
+        "input_tokens": {
+          "type": "number",
+          "unit": "token",
+          "description": {
+            "en": "Input token unit price",
+            "zh": "输入 token 单价"
+          }
+        },
+        "upstream_cost": {
+          "type": "number",
+          "unit": "credit",
+          "description": {
+            "en": "Price per USD of OpenRouter cost (usage.cost)",
+            "zh": "每 1 美元 OpenRouter 费用（usage.cost）的价格"
+          }
+        }
+      },
+      "usageExamples": [
+        {
+          "label": "d1.1 · 1k tokens",
+          "facts": {
+            "input_tokens": 1000,
+            "upstream_cost": 0.00002
+          }
+        },
+        {
+          "label": "jev-1.14 · 1k tokens",
+          "facts": {
+            "input_tokens": 1000,
+            "upstream_cost": 0.000042
+          }
+        }
+      ],
+      "usageProfiles": null,
+      "models": [
+        "classify-1",
+        "clef",
+        "clef-flash",
+        "clef-omni",
+        "d1",
+        "d1-latest",
+        "d1-ultra",
+        "d1-ultra-latest",
+        "d1.1",
+        "decisions-fast",
+        "drex-max",
+        "drex-max-finance",
+        "drex-v1.5",
+        "drex-v2.0",
+        "elephant-1",
+        "gemini-decision-1",
+        "gpt-6-luna-decisions",
+        "heygen-decision-1",
+        "heygen-decision-1-turbo",
+        "jev-1.13",
+        "jev-1.14",
+        "jev-latest",
+        "joey-1",
+        "kev-4b",
+        "mammoth-1",
+        "microsoft-decision-1",
+        "pplx-decider-flash-latest",
+        "pplx-decider-flash-v1.2",
+        "pplx-decider-flash-v1.3:free",
+        "pplx-decider-latest",
+        "pplx-decider-v1.2",
+        "pplx-decider-v1.3:free",
+        "reflex",
+        "solar-decide",
+        "solar-decide-flash",
+        "span-01",
+        "span-01-lite",
+        "span-01-lite:free",
+        "span-02",
+        "tev1-4b-experimental"
+      ],
+      "task": true,
+      "provider": false,
+      "transform": false,
+      "latest": "1.0.0",
       "versions": [
         {
           "version": "1.0.0",
-          "path": "plugins/tasks/apimart/1.0.0/plugin.js",
-          "sha256": "764de18cae44ec650a9718895be04914f84c739694a152f4f35914b65a5bb47a",
+          "path": "plugins/tasks/nyaasuki_decision/1.0.0/plugin.js",
+          "sha256": "573a8ecb85a08fcc4771cc85d45f6945c366e2db23c5a447d2045f87151d980a",
           "minApiVersion": 1,
           "kind": "task",
-          "allowedHosts": [
-            "upload.apimart.ai"
-          ],
-          "baseUrl": "https://api.apimart.ai",
-          "auth": "api_key"
-        },
-        {
-          "version": "1.1.0",
-          "path": "plugins/tasks/apimart/1.1.0/plugin.js",
-          "sha256": "f5bdd1fa397a7fbb212e31add96f23024440145dc5c846c2b0beb72abb1ae9db",
-          "minApiVersion": 1,
-          "kind": "task",
-          "allowedHosts": [
-            "upload.apimart.ai"
-          ],
-          "baseUrl": "https://api.apimart.ai",
-          "auth": "api_key"
+          "baseUrl": "https://openrouter.ai",
+          "auth": "api_key",
+          "readme": {
+            "path": "plugins/tasks/nyaasuki_decision/README.md",
+            "sha256": "e6bdfb0b7575fbb3f76792417271b31199a99fd95d31ed3d660acbea172dbfc2",
+            "translations": {
+              "zh-CN": {
+                "path": "plugins/tasks/nyaasuki_decision/README.zh-CN.md",
+                "sha256": "3cfb6553ae702a6f7ed71c17c24220dad84da2a6bc0b894b631891776073bad5"
+              }
+            }
+          },
+          "changelog": {
+            "path": "plugins/tasks/nyaasuki_decision/1.0.0/CHANGELOG.md",
+            "sha256": "a8f71e744385a47bf0cf8997c9e857d3e54b08ba52c28a6faacb8c10c1ef0b23",
+            "translations": {
+              "zh-CN": {
+                "path": "plugins/tasks/nyaasuki_decision/1.0.0/CHANGELOG.zh-CN.md",
+                "sha256": "1562e6aa89af93902b952d2eb7b1ca2cf306c072208d6effe12616dfd04b022c"
+              }
+            }
+          }
         }
       ]
     }

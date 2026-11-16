@@ -1,0 +1,63 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+env:
+  # tools/pluginindex compiles every plugin with New API's own plugin compiler
+  # through a relative replace directive (../../../new-api), so New API is
+  # checked out beside this repository, as in the official plugin repository.
+  NEW_API_REPO: QuantumNous/new-api
+  NEW_API_REF: main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout marketplace
+        uses: actions/checkout@v4
+        with:
+          path: newapi-plugin
+          fetch-depth: 0
+
+      - name: Checkout New API (plugin compiler)
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.NEW_API_REPO }}
+          ref: ${{ env.NEW_API_REF }}
+          path: new-api
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: new-api/go.mod
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Compile all plugins and verify index.json
+        working-directory: newapi-plugin/tools/pluginindex
+        run: go run . check ../..
+
+      - name: APIMart hook tests
+        working-directory: newapi-plugin
+        run: |
+          node test/apimart/run.mjs
+          node test/apimart/golden.mjs
+
+      - name: Published versions are immutable
+        if: github.event_name == 'pull_request'
+        working-directory: newapi-plugin
+        run: |
+          git fetch origin "${{ github.base_ref }}" --depth=1
+          changed=$(git diff --name-only --diff-filter=MD "origin/${{ github.base_ref }}"...HEAD -- 'plugins/**/plugin.js')
+          if [ -n "$changed" ]; then
+            echo "Published plugin versions must not be modified or deleted:"
+            echo "$changed"
+            echo "Publish a new version directory instead."
+            exit 1
+          fi

@@ -1,6 +1,6 @@
 // End-to-end test of the OpenRouter Decision plugin in real New API servers.
 //
-//   node test/e2e/run.mjs --server http://127.0.0.1:13000 [--relay http://127.0.0.1:13001] [--mock-port 18080] [--real]
+//   node test/decision/e2e/run.mjs --server http://127.0.0.1:13000 [--relay http://127.0.0.1:13001] [--mock-port 18080] [--real]
 //
 // Both servers must be fresh installs (the test runs their initial setup).
 // Gateway A gets a Task Plugin (61) channel pointing at a local mock of
@@ -14,7 +14,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { startMock, MOCK_KEY } from "./mock-openrouter.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
-const root = resolve(here, "..", "..");
+const root = resolve(here, "..", "..", "..");
 const argv = process.argv.slice(2);
 const option = (name) => {
   const index = argv.indexOf("--" + name);
@@ -24,12 +24,12 @@ const SERVER_A = (option("server") || "http://127.0.0.1:13000").replace(/\/+$/, 
 const SERVER_B = option("relay") ? option("relay").replace(/\/+$/, "") : null;
 const REAL = argv.includes("--real");
 const MOCK_PORT = Number(option("mock-port") || 18080);
-const PLUGIN_PATH = resolve(option("plugin") || join(root, "plugins/tasks/decision/1.0.0/plugin.js"));
+const PLUGIN_PATH = resolve(option("plugin") || join(root, "plugins/tasks/nyaasuki_decision/1.0.0/plugin.js"));
 const ADMIN = { username: "e2eroot", password: "E2e-Test-Pass-2026" };
 const QUOTA_PER_USD = 500000;
 
-const snapshot = JSON.parse(readFileSync(join(root, "tools/models.snapshot.json"), "utf8"));
-const suggested = JSON.parse(readFileSync(join(root, "tools/pricing.suggested.json"), "utf8")).models;
+const snapshot = JSON.parse(readFileSync(join(root, "tools/decision/models.snapshot.json"), "utf8"));
+const suggested = JSON.parse(readFileSync(join(root, "tools/decision/pricing.suggested.json"), "utf8")).models;
 const catalog = Object.fromEntries(snapshot.models.map((m) => [m.id, { prompt: Number(m.prompt), request: Number(m.request) }]));
 const plugin = await import(pathToFileURL(PLUGIN_PATH).href);
 
@@ -263,7 +263,7 @@ async function testGatewayB(b, token) {
 async function testRealUpstream(a, token, mockChannelId) {
   console.log("\n== Gateway A: Task Plugin (61) channel with the default address -> https://openrouter.ai (dummy key)");
   await a.must("POST", "/api/channel/" + mockChannelId + "/status", { status: 2 });
-  await a.addChannel({ type: 61, name: "openrouter-real", key: "sk-or-v1-invalid-e2e-key", base_url: "", setting: JSON.stringify({ task_plugin_key: "decision" }) });
+  await a.addChannel({ type: 61, name: "openrouter-real", key: "sk-or-v1-invalid-e2e-key", base_url: "", setting: JSON.stringify({ task_plugin_key: "nyaasuki_decision" }) });
   const channels = await a.must("GET", "/api/channel/?p=1&page_size=100");
   const real = (channels.data.items || channels.data).find((c) => c.name === "openrouter-real");
   check("an empty channel address takes the plugin default https://openrouter.ai", real && real.base_url === "https://openrouter.ai", real && real.base_url);
@@ -277,14 +277,14 @@ async function main() {
   try {
     const a = new Gateway(SERVER_A);
     await a.init();
-    const installed = await a.must("GET", "/api/plugin/task/decision");
+    const installed = await a.must("GET", "/api/plugin/task/nyaasuki_decision");
     check("plugin installed as OpenRouter Decision 1.0.0", JSON.stringify(installed).includes("OpenRouter Decision"), installed);
     const mockChannelId = await a.addChannel({
       type: 61,
       name: "openrouter-mock",
       key: MOCK_KEY,
       base_url: "http://127.0.0.1:" + MOCK_PORT,
-      setting: JSON.stringify({ task_plugin_key: "decision" }),
+      setting: JSON.stringify({ task_plugin_key: "nyaasuki_decision" }),
     });
     await a.price(PRICED);
     const tokenA = await a.issueToken("e2e");
@@ -298,7 +298,7 @@ async function main() {
         name: "gateway-a",
         key: tokenA,
         base_url: SERVER_A,
-        setting: JSON.stringify({ task_extend_plugin_keys: ["decision"] }),
+        setting: JSON.stringify({ task_extend_plugin_keys: ["nyaasuki_decision"] }),
       });
       await b.price(PRICED);
       await testGatewayB(b, await b.issueToken("e2e"));

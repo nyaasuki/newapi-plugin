@@ -7,8 +7,8 @@ import path from "node:path";
 
 globalThis.utils = { unixNow: () => 1780000000, uuid: () => "uuid" };
 
-const VERSION = "1.1.0";
-const plugin = await import(pathToFileURL(path.resolve(import.meta.dirname, "../plugins/tasks/apimart", VERSION, "plugin.js")).href);
+const VERSION = "1.2.0";
+const plugin = await import(pathToFileURL(path.resolve(import.meta.dirname, "../../plugins/tasks/nyaasuki_apimart", VERSION, "plugin.js")).href);
 const image = plugin.protocols.openai_image;
 
 let passed = 0;

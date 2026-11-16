@@ -12,7 +12,7 @@
 //   * OpenAI Images protocol (POST /v1/images/generations and /v1/images/edits
 //     on your New API instance): the host polls inside the request and returns
 //     a standard {created, data: [{url}]} response, adding b64_json on request.
-//   * Generic task API (POST /v1/tasks/apimart, GET /v1/tasks/{id},
+//   * Generic task API (POST /v1/tasks/nyaasuki_apimart, GET /v1/tasks/{id},
 //     GET /v1/tasks/{id}/artifacts): asynchronous submit and poll.
 //
 // Every model has a spec in SPECS describing the parameters APIMart accepts
@@ -893,11 +893,11 @@ function buildUsageProfiles() {
 
 export const meta = {
   apiVersion: 1,
-  key: "apimart",
+  key: "nyaasuki_apimart",
   name: "APIMart",
   icon: "text:AM",
-  version: "1.1.0",
-  author: { name: "newapi-plugin-apimart contributors" },
+  version: "1.2.0",
+  author: { name: "nyaasuki", url: "https://github.com/nyaasuki/newapi-plugin" },
   website: "https://apimart.ai",
   description: {
     en: "APIMart image models: GPT-Image, Nano Banana, Imagen, Seedream, FLUX, Qwen, Wan, Grok Imagine and more",

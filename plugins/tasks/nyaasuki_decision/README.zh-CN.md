@@ -7,7 +7,7 @@ locale: zh-CN
 
 ## 渠道设置
 
-- 渠道类型选任务插件 (61)，并绑定 OpenRouter Decision 插件。
+- 渠道类型选任务插件 (61)，并绑定 OpenRouter Decision 插件（key 为 `nyaasuki_decision`）。
 - 密钥填 OpenRouter 的 API Key，详见 [Decisions API 文档](https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-request)。
 - API 地址留空时使用 `https://openrouter.ai`。地址末尾带 `/api` 或 `/api/v1` 也可以。
 - 按下表的 New API 模型名，把要提供的模型加到渠道的模型列表里。模型权限和分组和其他渠道一样生效。
@@ -67,7 +67,7 @@ locale: zh-CN
 
 目录里的 `cloudflare/clairic` 只支持 Extractions API，插件不收录。OpenRouter 标注 `liquid/d1` 将于 2026-11-20 下架。
 不在列表里的模型由网关直接返回 400 错误，不会发到 OpenRouter；直接传完整的 OpenRouter ID（例如 `liquid/d1.1`）也会被拒绝。
-TypeSafe 插件也声明了 `jev-latest`。两个插件都安装时，`jev-latest` 的模型级价格对两者都生效；要给本插件单独定价，请为 `decision::jev-latest` 设置渠道插件价格。
+TypeSafe 插件也声明了 `jev-latest`。两个插件都安装时，`jev-latest` 的模型级价格对两者都生效；要给本插件单独定价，请为 `nyaasuki_decision::jev-latest` 设置渠道插件价格。
 
 问题类型有 `choice`、`noul` 和 `score`，Jev 还支持 `box`。每个模型接受哪些问题类型、媒体格式和 `state` 结构，以该模型自身能力为准；OpenRouter 对不支持的请求返回 400。
 错误按 OpenRouter 的格式 `{"error": {"code", "message"}}` 返回给客户端。OpenRouter 的 4xx 错误保留原状态码和原始信息；5xx 错误保留状态码，信息由网关换成通用提示。

@@ -1,6 +1,6 @@
 ---
 changelogVersion: 1
-plugin: "decision"
+plugin: "nyaasuki_decision"
 version: "1.0.0"
 locale: "en"
 translations:
@@ -24,4 +24,4 @@ translations:
 ### Migration
 
 - Set a price for each model before offering it, using task usage expression billing. At OpenRouter's list price, `d1.1` is `tier("base", u("input_tokens") * 0.02 / 1000000)` and `jev-1.14` is `tier("base", u("input_tokens") * 0.042 / 1000000)`. To charge what OpenRouter charges, including per-request and web search fees, use `tier("base", u("upstream_cost"))`.
-- If the TypeSafe plugin is also installed, both plugins declare `jev-latest` and share its model-level price. Set a provider price for `decision::jev-latest` to price this plugin's calls separately.
+- If the TypeSafe plugin is also installed, both plugins declare `jev-latest` and share its model-level price. Set a provider price for `nyaasuki_decision::jev-latest` to price this plugin's calls separately.
