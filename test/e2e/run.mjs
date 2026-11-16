@@ -122,16 +122,16 @@ class Gateway {
 }
 
 const PRICED = {
-  "liquid/d1.1": suggested["liquid/d1.1"].by_input_tokens,
-  "typesafe/jev-1.14": suggested["typesafe/jev-1.14"].by_input_tokens,
-  "~typesafe/jev-latest": suggested["~typesafe/jev-latest"].by_input_tokens,
-  "perplexity/pplx-decider-v1.3:free": suggested["perplexity/pplx-decider-v1.3:free"].by_input_tokens,
-  "parallel/decisions-fast": suggested["parallel/decisions-fast"].by_input_tokens,
-  "cloudflare/clef": suggested["cloudflare/clef"].by_upstream_cost,
+  "d1.1": suggested["d1.1"].by_input_tokens,
+  "jev-1.14": suggested["jev-1.14"].by_input_tokens,
+  "jev-latest": suggested["jev-latest"].by_input_tokens,
+  "pplx-decider-v1.3:free": suggested["pplx-decider-v1.3:free"].by_input_tokens,
+  "decisions-fast": suggested["decisions-fast"].by_input_tokens,
+  "clef": suggested["clef"].by_upstream_cost,
 };
 
 const D11_REQUEST = {
-  model: "liquid/d1.1",
+  model: "d1.1",
   state: { zeta: "first member", alpha: "second member", ticket: "My checkout page is blank after I click Pay." },
   questions: {
     team: { type: "choice", instructions: "Which team owns this?", criteria: { payments: "Checkout issues", frontend: "Rendering", account: null } },
@@ -144,30 +144,31 @@ async function testGatewayA(a, token, requests) {
   console.log("\n== Gateway A: Task Plugin (61) channel -> mock OpenRouter");
   let before = requests.length;
   let reply = await a.decide(token, D11_REQUEST);
-  check("liquid/d1.1 returns 200", reply.status === 200, reply.body);
+  check("d1.1 returns 200", reply.status === 200, reply.body);
   check(
     "liquid/d1.1 returns choice, noul and score answers",
     reply.body.answers && reply.body.answers.team.type === "choice" && reply.body.answers.is_bug.type === "noul" && reply.body.answers.urgency.type === "score",
     reply.body,
   );
-  check("liquid/d1.1 reply carries upstream usage and id", reply.body.usage && Number.isInteger(reply.body.usage.input_tokens) && reply.body.id, reply.body);
+  check("d1.1 reply carries upstream usage and id", reply.body.usage && Number.isInteger(reply.body.usage.input_tokens) && reply.body.id, reply.body);
+  check("d1.1 reply names the model d1.1", reply.body.model === "d1.1", reply.body.model);
   const sent = requests[before];
   check("upstream receives POST /api/alpha/decisions", sent && sent.url === "/api/alpha/decisions", sent && sent.url);
   check("upstream receives the channel's OpenRouter key", sent && sent.headers.authorization === "Bearer " + MOCK_KEY);
   check(
-    "upstream body keeps the client's model, state and questions",
+    "upstream body carries the OpenRouter ID liquid/d1.1 and the client's state and questions",
     sent && sent.body.model === "liquid/d1.1" && JSON.stringify(sent.body.questions) === JSON.stringify(D11_REQUEST.questions),
     sent && sent.body,
   );
   check("upstream body keeps state member order", sent && sent.raw.indexOf('"zeta"') < sent.raw.indexOf('"alpha"'), sent && sent.raw);
   const d11Tokens = reply.body.usage.input_tokens;
-  let log = await a.lastLog("liquid/d1.1");
+  let log = await a.lastLog("d1.1");
   const d11Expected = Math.round(d11Tokens * 0.02 * QUOTA_PER_USD / 1e6);
-  check("liquid/d1.1 settles on reported input tokens (" + d11Tokens + " tokens -> quota " + d11Expected + ")", log && Math.abs(log.quota - d11Expected) <= 1, log && log.quota);
+  check("d1.1 settles on reported input tokens (" + d11Tokens + " tokens -> quota " + d11Expected + ")", log && Math.abs(log.quota - d11Expected) <= 1, log && log.quota);
 
   before = requests.length;
   reply = await a.decide(token, {
-    model: "typesafe/jev-1.14",
+    model: "jev-1.14",
     state: ["Product photo:", { type: "image_url", image_url: { url: "data:image/png;base64,iVBORw0KGgo=" } }],
     questions: {
       present: { type: "noul", instructions: "Is there a mug in the photo?" },
@@ -175,20 +176,21 @@ async function testGatewayA(a, token, requests) {
     },
   });
   check(
-    "typesafe/jev-1.14 returns 200 with noul and box answers",
+    "jev-1.14 returns 200 with noul and box answers",
     reply.status === 200 && reply.body.answers.product.type === "box" && reply.body.answers.present.type === "noul",
     reply.body,
   );
-  check("typesafe/jev-1.14 forwards image_url parts unchanged", requests[before] && requests[before].body.state[1].type === "image_url");
+  check("jev-1.14 forwards image_url parts unchanged", requests[before] && requests[before].body.state[1].type === "image_url");
 
-  reply = await a.decide(token, { model: "~typesafe/jev-latest", state: "hello", questions: { q: { type: "noul" } } });
-  check("~typesafe/jev-latest alias returns 200", reply.status === 200 && reply.body.answers.q.type === "noul", reply.body);
-  reply = await a.decide(token, { model: "perplexity/pplx-decider-v1.3:free", state: "hello", questions: { ok: { type: "noul" }, refuse_me: { type: "noul" } } });
+  reply = await a.decide(token, { model: "jev-latest", state: "hello", questions: { q: { type: "noul" } } });
+  check("jev-latest (OpenRouter ~typesafe/jev-latest) returns 200", reply.status === 200 && reply.body.answers.q.type === "noul", reply.body);
+  check("jev-latest reaches OpenRouter as ~typesafe/jev-latest", requests[requests.length - 1].body.model === "~typesafe/jev-latest", requests[requests.length - 1].body.model);
+  reply = await a.decide(token, { model: "pplx-decider-v1.3:free", state: "hello", questions: { ok: { type: "noul" }, refuse_me: { type: "noul" } } });
   check("perplexity :free variant returns 200 and passes a refusal answer through", reply.status === 200 && reply.body.answers.refuse_me.type === "refusal", reply.body);
 
   before = requests.length;
   reply = await a.decide(token, {
-    model: "parallel/decisions-fast",
+    model: "decisions-fast",
     state: "hello",
     questions: { q: { type: "noul" } },
     provider: { allow_fallbacks: false },
@@ -200,18 +202,21 @@ async function testGatewayA(a, token, requests) {
     reply.status === 200 && requests[before] && requests[before].body.session_id === "session-e2e" && requests[before].body.provider.allow_fallbacks === false,
     reply.body,
   );
-  log = await a.lastLog("parallel/decisions-fast");
-  check("parallel/decisions-fast bills its 0.001 USD request fee (quota 500)", log && log.quota === 500, log && log.quota);
+  log = await a.lastLog("decisions-fast");
+  check("decisions-fast bills its 0.001 USD request fee (quota 500)", log && log.quota === 500, log && log.quota);
 
-  reply = await a.decide(token, { model: "cloudflare/clef", state: "x".repeat(4000), questions: { q: { type: "noul" } } });
-  check("cloudflare/clef billed by upstream_cost returns 200", reply.status === 200, reply.body);
-  log = await a.lastLog("cloudflare/clef");
+  reply = await a.decide(token, { model: "clef", state: "x".repeat(4000), questions: { q: { type: "noul" } } });
+  check("clef billed by upstream_cost returns 200", reply.status === 200, reply.body);
+  log = await a.lastLog("clef");
   const clefExpected = Math.round(reply.body.usage.cost * QUOTA_PER_USD);
-  check("cloudflare/clef settles on usage.cost (" + reply.body.usage.cost + " USD -> quota " + clefExpected + ")", log && Math.abs(log.quota - clefExpected) <= 1, log && log.quota);
+  check("clef settles on usage.cost (" + reply.body.usage.cost + " USD -> quota " + clefExpected + ")", log && Math.abs(log.quota - clefExpected) <= 1, log && log.quota);
 
   before = requests.length;
-  reply = await a.decide(token, { model: "cloudflare/clairic", state: "hello", questions: { q: { type: "noul" } } });
-  check("Extractions-only cloudflare/clairic is rejected with 400", reply.status === 400, reply.body);
+  reply = await a.decide(token, { model: "clairic", state: "hello", questions: { q: { type: "noul" } } });
+  check("Extractions-only clairic is rejected with 400", reply.status === 400, reply.body);
+  note("error body: " + reply.text);
+  reply = await a.decide(token, { model: "liquid/d1.1", state: "hello", questions: { q: { type: "noul" } } });
+  check("the full OpenRouter ID liquid/d1.1 is not a New API model name (400)", reply.status === 400, reply.body);
   note("error body: " + reply.text);
   reply = await a.decide(token, { model: "openai/gpt-4o", state: "hello", questions: { q: { type: "noul" } } });
   check("a model not on the whitelist is rejected with 400", reply.status === 400, reply.body);
@@ -219,26 +224,26 @@ async function testGatewayA(a, token, requests) {
   check("rejected models never reach OpenRouter", requests.length === before);
 
   before = requests.length;
-  reply = await a.decide(token, { model: "morph/reflex", state: "hello", questions: { q: { type: "noul" } } });
+  reply = await a.decide(token, { model: "reflex", state: "hello", questions: { q: { type: "noul" } } });
   check("a whitelisted model without a price is refused before OpenRouter", reply.status >= 400 && requests.length === before, reply.body);
   note("status " + reply.status + " error body: " + reply.text);
 
-  reply = await a.decide(token, { model: "liquid/d1.1", state: "hi", questions: { q: { type: "noul" } }, temperature: 0 });
+  reply = await a.decide(token, { model: "d1.1", state: "hi", questions: { q: { type: "noul" } }, temperature: 0 });
   check("an unknown top-level field is rejected with 400", reply.status === 400, reply.body);
   note("error body: " + reply.text);
-  reply = await a.decide(token, { model: "liquid/d1.1", state: "hi", questions: {} });
+  reply = await a.decide(token, { model: "d1.1", state: "hi", questions: {} });
   check("empty questions are rejected with 400", reply.status === 400, reply.body);
   note("error body: " + reply.text);
 
-  reply = await a.decide(token, { model: "liquid/d1.1", state: "hi", questions: { b: { type: "box", instructions: "the mug" } } });
-  check("a box question on liquid/d1.1 returns OpenRouter's 400", reply.status === 400 && reply.body.error && /Box/.test(reply.body.error.message), reply.body);
+  reply = await a.decide(token, { model: "d1.1", state: "hi", questions: { b: { type: "box", instructions: "the mug" } } });
+  check("a box question on d1.1 returns OpenRouter's 400", reply.status === 400 && reply.body.error && /Box/.test(reply.body.error.message), reply.body);
   note("error body: " + reply.text);
   for (const [state, status] of [
     ["__insufficient_credits__", 402],
     ["__rate_limited__", 429],
     ["__provider_error__", 502],
   ]) {
-    reply = await a.decide(token, { model: "liquid/d1.1", state, questions: { q: { type: "noul" } } });
+    reply = await a.decide(token, { model: "d1.1", state, questions: { q: { type: "noul" } } });
     check("an upstream " + status + " reaches the client with status " + reply.status, reply.status === status && reply.body.error, reply.body);
     note("error body: " + reply.text);
   }
@@ -247,10 +252,10 @@ async function testGatewayA(a, token, requests) {
 async function testGatewayB(b, token) {
   console.log("\n== Gateway B: New API (60) channel -> gateway A");
   let reply = await b.decide(token, D11_REQUEST);
-  check("liquid/d1.1 through a New API (60) upstream returns 200 with answers", reply.status === 200 && reply.body.answers && reply.body.answers.team.type === "choice", reply.body);
-  const log = await b.lastLog("liquid/d1.1");
+  check("d1.1 through a New API (60) upstream returns 200 with answers", reply.status === 200 && reply.body.answers && reply.body.answers.team.type === "choice", reply.body);
+  const log = await b.lastLog("d1.1");
   check("gateway B settles on the usage gateway A returns", log && log.quota >= 0 && reply.body.usage, log);
-  reply = await b.decide(token, { model: "liquid/d1.1", state: "hi", questions: { b: { type: "box", instructions: "the mug" } } });
+  reply = await b.decide(token, { model: "d1.1", state: "hi", questions: { b: { type: "box", instructions: "the mug" } } });
   check("an OpenRouter 400 reaches the client through two gateways", reply.status === 400 && reply.body.error, reply.body);
   note("error body: " + reply.text);
 }

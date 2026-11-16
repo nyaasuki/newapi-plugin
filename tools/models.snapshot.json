@@ -4,46 +4,20 @@
   "endpoint": "/api/alpha/decisions",
   "models": [
     {
-      "id": "baseten/elephant-1",
-      "name": "Baseten: Elephant 1",
-      "canonical_slug": "baseten/elephant-1-20261021",
-      "context": 16384,
-      "prompt": "0.000000035",
+      "id": "scaledown/classify-1",
+      "name": "ScaleDown: Classify-1",
+      "canonical_slug": "scaledown/classify-1-20260928",
+      "context": 1000000,
+      "prompt": "0.00000004",
       "request": "0",
       "webSearch": "0",
       "input_modalities": [
         "text",
-        "image"
+        "image",
+        "file"
       ],
-      "expiration_date": null
-    },
-    {
-      "id": "baseten/joey-1",
-      "name": "Baseten: Joey 1",
-      "canonical_slug": "baseten/joey-1-20261029",
-      "context": 16384,
-      "prompt": "0.00000001",
-      "request": "0",
-      "webSearch": "0",
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "expiration_date": null
-    },
-    {
-      "id": "baseten/mammoth-1",
-      "name": "Baseten: Mammoth 1",
-      "canonical_slug": "baseten/mammoth-1-20261021",
-      "context": 16384,
-      "prompt": "0.0000001",
-      "request": "0",
-      "webSearch": "0",
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "expiration_date": null
+      "expiration_date": null,
+      "gateway_model": "classify-1"
     },
     {
       "id": "cloudflare/clef",
@@ -57,7 +31,8 @@
         "text",
         "image"
       ],
-      "expiration_date": null
+      "expiration_date": null,
+      "gateway_model": "clef"
     },
     {
       "id": "cloudflare/clef-flash",
@@ -71,7 +46,8 @@
         "text",
         "image"
       ],
-      "expiration_date": null
+      "expiration_date": null,
+      "gateway_model": "clef-flash"
     },
     {
       "id": "cloudflare/clef-omni",
@@ -87,7 +63,170 @@
         "audio",
         "video"
       ],
-      "expiration_date": null
+      "expiration_date": null,
+      "gateway_model": "clef-omni"
+    },
+    {
+      "id": "liquid/d1",
+      "name": "LiquidAI: d1",
+      "canonical_slug": "liquid/d1-20260930",
+      "context": 65536,
+      "prompt": "0.00000002",
+      "request": "0",
+      "webSearch": "0",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "expiration_date": "2026-11-20",
+      "gateway_model": "d1"
+    },
+    {
+      "id": "~liquid/d1-latest",
+      "name": "LiquidAI: d1 Latest",
+      "canonical_slug": "~liquid/d1-latest",
+      "context": 65536,
+      "prompt": "0.00000002",
+      "request": "0",
+      "webSearch": "0",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "expiration_date": null,
+      "gateway_model": "d1-latest"
+    },
+    {
+      "id": "liquid/d1-ultra",
+      "name": "LiquidAI: d1-ultra",
+      "canonical_slug": "liquid/d1-ultra-20261015",
+      "context": 32768,
+      "prompt": "0.000000042",
+      "request": "0",
+      "webSearch": "0",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "expiration_date": null,
+      "gateway_model": "d1-ultra"
+    },
+    {
+      "id": "~liquid/d1-ultra-latest",
+      "name": "LiquidAI: d1-ultra Latest",
+      "canonical_slug": "~liquid/d1-ultra-latest",
+      "context": 32768,
+      "prompt": "0.000000042",
+      "request": "0",
+      "webSearch": "0",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "expiration_date": null,
+      "gateway_model": "d1-ultra-latest"
+    },
+    {
+      "id": "liquid/d1.1",
+      "name": "LiquidAI: d1.1",
+      "canonical_slug": "liquid/d1.1-20261027",
+      "context": 65536,
+      "prompt": "0.00000002",
+      "request": "0",
+      "webSearch": "0",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "expiration_date": null,
+      "gateway_model": "d1.1"
+    },
+    {
+      "id": "parallel/decisions-fast",
+      "name": "Parallel: Decisions Fast",
+      "canonical_slug": "parallel/decisions-fast-20261106",
+      "context": 32000,
+      "prompt": "0",
+      "request": "0.001",
+      "webSearch": "0",
+      "input_modalities": [
+        "text"
+      ],
+      "expiration_date": null,
+      "gateway_model": "decisions-fast"
+    },
+    {
+      "id": "nace-ai/drex-max",
+      "name": "Nace.AI: Drex Max",
+      "canonical_slug": "nace-ai/drex-max-20261016",
+      "context": 262144,
+      "prompt": "0.00000006",
+      "request": "0",
+      "webSearch": "0",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "expiration_date": null,
+      "gateway_model": "drex-max"
+    },
+    {
+      "id": "nace-ai/drex-max-finance",
+      "name": "Nace.AI: Drex Max Finance",
+      "canonical_slug": "nace-ai/drex-max-finance-20261110",
+      "context": 262144,
+      "prompt": "0.00000006",
+      "request": "0",
+      "webSearch": "0",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "expiration_date": null,
+      "gateway_model": "drex-max-finance"
+    },
+    {
+      "id": "nace-ai/drex-v1.5",
+      "name": "Nace.AI: Drex v1.5",
+      "canonical_slug": "nace-ai/drex-v1.5-20261009",
+      "context": 131072,
+      "prompt": "0.00000004",
+      "request": "0",
+      "webSearch": "0",
+      "input_modalities": [
+        "text"
+      ],
+      "expiration_date": null,
+      "gateway_model": "drex-v1.5"
+    },
+    {
+      "id": "nace-ai/drex-v2.0",
+      "name": "Nace.AI: Drex v2.0",
+      "canonical_slug": "nace-ai/drex-v2.0-20261009",
+      "context": 131072,
+      "prompt": "0.00000006",
+      "request": "0",
+      "webSearch": "0",
+      "input_modalities": [
+        "text"
+      ],
+      "expiration_date": null,
+      "gateway_model": "drex-v2.0"
+    },
+    {
+      "id": "baseten/elephant-1",
+      "name": "Baseten: Elephant 1",
+      "canonical_slug": "baseten/elephant-1-20261021",
+      "context": 16384,
+      "prompt": "0.000000035",
+      "request": "0",
+      "webSearch": "0",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "expiration_date": null,
+      "gateway_model": "elephant-1"
     },
     {
       "id": "google/gemini-decision-1",
@@ -104,171 +243,8 @@
         "video",
         "file"
       ],
-      "expiration_date": null
-    },
-    {
-      "id": "heygen/heygen-decision-1",
-      "name": "HeyGen: HeyGen Decision",
-      "canonical_slug": "heygen/heygen-decision-1-20261112",
-      "context": 131072,
-      "prompt": "0.00000014",
-      "request": "0",
-      "webSearch": "0",
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "expiration_date": null
-    },
-    {
-      "id": "heygen/heygen-decision-1-turbo",
-      "name": "HeyGen: HeyGen Decision Turbo",
-      "canonical_slug": "heygen/heygen-decision-1-turbo-20261112",
-      "context": 262144,
-      "prompt": "0.00000009",
-      "request": "0",
-      "webSearch": "0",
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "expiration_date": null
-    },
-    {
-      "id": "jaredpalmer/kev-4b",
-      "name": "Jared Palmer: Kev 4B",
-      "canonical_slug": "jaredpalmer/kev-4b-20260924",
-      "context": 8192,
-      "prompt": "0.000000042",
-      "request": "0",
-      "webSearch": "0",
-      "input_modalities": [
-        "text"
-      ],
-      "expiration_date": null
-    },
-    {
-      "id": "liquid/d1",
-      "name": "LiquidAI: d1",
-      "canonical_slug": "liquid/d1-20260930",
-      "context": 65536,
-      "prompt": "0.00000002",
-      "request": "0",
-      "webSearch": "0",
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "expiration_date": "2026-11-20"
-    },
-    {
-      "id": "liquid/d1-ultra",
-      "name": "LiquidAI: d1-ultra",
-      "canonical_slug": "liquid/d1-ultra-20261015",
-      "context": 32768,
-      "prompt": "0.000000042",
-      "request": "0",
-      "webSearch": "0",
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "expiration_date": null
-    },
-    {
-      "id": "liquid/d1.1",
-      "name": "LiquidAI: d1.1",
-      "canonical_slug": "liquid/d1.1-20261027",
-      "context": 65536,
-      "prompt": "0.00000002",
-      "request": "0",
-      "webSearch": "0",
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "expiration_date": null
-    },
-    {
-      "id": "microsoft/microsoft-decision-1",
-      "name": "Microsoft: Microsoft-Decision-1",
-      "canonical_slug": "microsoft/microsoft-decision-1-20261009",
-      "context": 32768,
-      "prompt": "0.000000042",
-      "request": "0",
-      "webSearch": "0",
-      "input_modalities": [
-        "text"
-      ],
-      "expiration_date": null
-    },
-    {
-      "id": "morph/reflex",
-      "name": "Morph: Reflex",
-      "canonical_slug": "morph/reflex-20261103",
-      "context": 65536,
-      "prompt": "0.000000042",
-      "request": "0",
-      "webSearch": "0",
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "expiration_date": null
-    },
-    {
-      "id": "nace-ai/drex-max",
-      "name": "Nace.AI: Drex Max",
-      "canonical_slug": "nace-ai/drex-max-20261016",
-      "context": 262144,
-      "prompt": "0.00000006",
-      "request": "0",
-      "webSearch": "0",
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "expiration_date": null
-    },
-    {
-      "id": "nace-ai/drex-max-finance",
-      "name": "Nace.AI: Drex Max Finance",
-      "canonical_slug": "nace-ai/drex-max-finance-20261110",
-      "context": 262144,
-      "prompt": "0.00000006",
-      "request": "0",
-      "webSearch": "0",
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "expiration_date": null
-    },
-    {
-      "id": "nace-ai/drex-v1.5",
-      "name": "Nace.AI: Drex v1.5",
-      "canonical_slug": "nace-ai/drex-v1.5-20261009",
-      "context": 131072,
-      "prompt": "0.00000004",
-      "request": "0",
-      "webSearch": "0",
-      "input_modalities": [
-        "text"
-      ],
-      "expiration_date": null
-    },
-    {
-      "id": "nace-ai/drex-v2.0",
-      "name": "Nace.AI: Drex v2.0",
-      "canonical_slug": "nace-ai/drex-v2.0-20261009",
-      "context": 131072,
-      "prompt": "0.00000006",
-      "request": "0",
-      "webSearch": "0",
-      "input_modalities": [
-        "text"
-      ],
-      "expiration_date": null
+      "expiration_date": null,
+      "gateway_model": "gemini-decision-1"
     },
     {
       "id": "openai/gpt-6-luna-decisions",
@@ -282,157 +258,38 @@
         "text",
         "image"
       ],
-      "expiration_date": null
+      "expiration_date": null,
+      "gateway_model": "gpt-6-luna-decisions"
     },
     {
-      "id": "parallel/decisions-fast",
-      "name": "Parallel: Decisions Fast",
-      "canonical_slug": "parallel/decisions-fast-20261106",
-      "context": 32000,
-      "prompt": "0",
-      "request": "0.001",
-      "webSearch": "0",
-      "input_modalities": [
-        "text"
-      ],
-      "expiration_date": null
-    },
-    {
-      "id": "perplexity/pplx-decider-flash-v1.2",
-      "name": "Perplexity: Decider Flash V1.2",
-      "canonical_slug": "perplexity/pplx-decider-flash-v1.2-20261016",
-      "context": 262144,
-      "prompt": "0.00000001",
-      "request": "0",
-      "webSearch": "0",
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "expiration_date": null
-    },
-    {
-      "id": "perplexity/pplx-decider-flash-v1.3:free",
-      "name": "Perplexity: Decider Flash V1.3 (free)",
-      "canonical_slug": "perplexity/pplx-decider-flash-v1.3-20261112",
-      "context": 262144,
-      "prompt": "0",
-      "request": "0",
-      "webSearch": "0",
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "expiration_date": null
-    },
-    {
-      "id": "perplexity/pplx-decider-v1.2",
-      "name": "Perplexity: Decider V1.2",
-      "canonical_slug": "perplexity/pplx-decider-v1.2-20261016",
-      "context": 262144,
-      "prompt": "0.00000002",
-      "request": "0",
-      "webSearch": "0",
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "expiration_date": null
-    },
-    {
-      "id": "perplexity/pplx-decider-v1.3:free",
-      "name": "Perplexity: Decider V1.3 (free)",
-      "canonical_slug": "perplexity/pplx-decider-v1.3-20261112",
-      "context": 262144,
-      "prompt": "0",
-      "request": "0",
-      "webSearch": "0",
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "expiration_date": null
-    },
-    {
-      "id": "respan/span-01",
-      "name": "Respan: Span-01",
-      "canonical_slug": "respan/span-01-20260925",
-      "context": 0,
-      "prompt": "0.00000002",
-      "request": "0",
-      "webSearch": "0",
-      "input_modalities": [
-        "text"
-      ],
-      "expiration_date": null
-    },
-    {
-      "id": "respan/span-01-lite",
-      "name": "Respan: Span-01 Lite",
-      "canonical_slug": "respan/span-01-lite-20260925",
-      "context": 0,
-      "prompt": "0",
-      "request": "0",
-      "webSearch": "0",
-      "input_modalities": [
-        "text"
-      ],
-      "expiration_date": null
-    },
-    {
-      "id": "respan/span-01-lite:free",
-      "name": "Respan: Span-01 Lite (free)",
-      "canonical_slug": "respan/span-01-lite-20260925",
-      "context": 0,
-      "prompt": "0",
-      "request": "0",
-      "webSearch": "0",
-      "input_modalities": [
-        "text"
-      ],
-      "expiration_date": null
-    },
-    {
-      "id": "respan/span-02",
-      "name": "Respan: Span-02",
-      "canonical_slug": "respan/span-02-20261015",
+      "id": "heygen/heygen-decision-1",
+      "name": "HeyGen: HeyGen Decision",
+      "canonical_slug": "heygen/heygen-decision-1-20261112",
       "context": 131072,
-      "prompt": "0.00000001",
+      "prompt": "0.00000014",
       "request": "0",
       "webSearch": "0",
       "input_modalities": [
         "text",
         "image"
       ],
-      "expiration_date": null
+      "expiration_date": null,
+      "gateway_model": "heygen-decision-1"
     },
     {
-      "id": "scaledown/classify-1",
-      "name": "ScaleDown: Classify-1",
-      "canonical_slug": "scaledown/classify-1-20260928",
-      "context": 1000000,
-      "prompt": "0.00000004",
+      "id": "heygen/heygen-decision-1-turbo",
+      "name": "HeyGen: HeyGen Decision Turbo",
+      "canonical_slug": "heygen/heygen-decision-1-turbo-20261112",
+      "context": 262144,
+      "prompt": "0.00000009",
       "request": "0",
       "webSearch": "0",
       "input_modalities": [
         "text",
-        "image",
-        "file"
+        "image"
       ],
-      "expiration_date": null
-    },
-    {
-      "id": "togethercomputer/tev1-4b-experimental",
-      "name": "Together: Tev1 4B Experimental",
-      "canonical_slug": "togethercomputer/tev1-4b-experimental-20260923",
-      "context": 32768,
-      "prompt": "0.000000042",
-      "request": "0",
-      "webSearch": "0",
-      "input_modalities": [
-        "text"
-      ],
-      "expiration_date": null
+      "expiration_date": null,
+      "gateway_model": "heygen-decision-1-turbo"
     },
     {
       "id": "typesafe/jev-1.13",
@@ -446,7 +303,8 @@
         "text",
         "image"
       ],
-      "expiration_date": null
+      "expiration_date": null,
+      "gateway_model": "jev-1.13"
     },
     {
       "id": "typesafe/jev-1.14",
@@ -460,89 +318,8 @@
         "text",
         "image"
       ],
-      "expiration_date": null
-    },
-    {
-      "id": "upstage/solar-decide",
-      "name": "Upstage: Solar Decide",
-      "canonical_slug": "upstage/solar-decide-20260928",
-      "context": 524288,
-      "prompt": "0.00000005",
-      "request": "0",
-      "webSearch": "0",
-      "input_modalities": [
-        "text"
-      ],
-      "expiration_date": null
-    },
-    {
-      "id": "upstage/solar-decide-flash",
-      "name": "Upstage: Solar Decide Flash",
-      "canonical_slug": "upstage/solar-decide-flash-20261008",
-      "context": 524288,
-      "prompt": "0.00000005",
-      "request": "0",
-      "webSearch": "0",
-      "input_modalities": [
-        "text"
-      ],
-      "expiration_date": null
-    },
-    {
-      "id": "~liquid/d1-latest",
-      "name": "LiquidAI: d1 Latest",
-      "canonical_slug": "~liquid/d1-latest",
-      "context": 65536,
-      "prompt": "0.00000002",
-      "request": "0",
-      "webSearch": "0",
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "expiration_date": null
-    },
-    {
-      "id": "~liquid/d1-ultra-latest",
-      "name": "LiquidAI: d1-ultra Latest",
-      "canonical_slug": "~liquid/d1-ultra-latest",
-      "context": 32768,
-      "prompt": "0.000000042",
-      "request": "0",
-      "webSearch": "0",
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "expiration_date": null
-    },
-    {
-      "id": "~perplexity/pplx-decider-flash-latest",
-      "name": "Perplexity: Decider Flash Latest",
-      "canonical_slug": "~perplexity/pplx-decider-flash-latest",
-      "context": 262144,
-      "prompt": "0.00000001",
-      "request": "0",
-      "webSearch": "0",
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "expiration_date": null
-    },
-    {
-      "id": "~perplexity/pplx-decider-latest",
-      "name": "Perplexity: Decider Latest",
-      "canonical_slug": "~perplexity/pplx-decider-latest",
-      "context": 262144,
-      "prompt": "0.00000002",
-      "request": "0",
-      "webSearch": "0",
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "expiration_date": null
+      "expiration_date": null,
+      "gateway_model": "jev-1.14"
     },
     {
       "id": "~typesafe/jev-latest",
@@ -556,7 +333,270 @@
         "text",
         "image"
       ],
-      "expiration_date": null
+      "expiration_date": null,
+      "gateway_model": "jev-latest"
+    },
+    {
+      "id": "baseten/joey-1",
+      "name": "Baseten: Joey 1",
+      "canonical_slug": "baseten/joey-1-20261029",
+      "context": 16384,
+      "prompt": "0.00000001",
+      "request": "0",
+      "webSearch": "0",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "expiration_date": null,
+      "gateway_model": "joey-1"
+    },
+    {
+      "id": "jaredpalmer/kev-4b",
+      "name": "Jared Palmer: Kev 4B",
+      "canonical_slug": "jaredpalmer/kev-4b-20260924",
+      "context": 8192,
+      "prompt": "0.000000042",
+      "request": "0",
+      "webSearch": "0",
+      "input_modalities": [
+        "text"
+      ],
+      "expiration_date": null,
+      "gateway_model": "kev-4b"
+    },
+    {
+      "id": "baseten/mammoth-1",
+      "name": "Baseten: Mammoth 1",
+      "canonical_slug": "baseten/mammoth-1-20261021",
+      "context": 16384,
+      "prompt": "0.0000001",
+      "request": "0",
+      "webSearch": "0",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "expiration_date": null,
+      "gateway_model": "mammoth-1"
+    },
+    {
+      "id": "microsoft/microsoft-decision-1",
+      "name": "Microsoft: Microsoft-Decision-1",
+      "canonical_slug": "microsoft/microsoft-decision-1-20261009",
+      "context": 32768,
+      "prompt": "0.000000042",
+      "request": "0",
+      "webSearch": "0",
+      "input_modalities": [
+        "text"
+      ],
+      "expiration_date": null,
+      "gateway_model": "microsoft-decision-1"
+    },
+    {
+      "id": "~perplexity/pplx-decider-flash-latest",
+      "name": "Perplexity: Decider Flash Latest",
+      "canonical_slug": "~perplexity/pplx-decider-flash-latest",
+      "context": 262144,
+      "prompt": "0.00000001",
+      "request": "0",
+      "webSearch": "0",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "expiration_date": null,
+      "gateway_model": "pplx-decider-flash-latest"
+    },
+    {
+      "id": "perplexity/pplx-decider-flash-v1.2",
+      "name": "Perplexity: Decider Flash V1.2",
+      "canonical_slug": "perplexity/pplx-decider-flash-v1.2-20261016",
+      "context": 262144,
+      "prompt": "0.00000001",
+      "request": "0",
+      "webSearch": "0",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "expiration_date": null,
+      "gateway_model": "pplx-decider-flash-v1.2"
+    },
+    {
+      "id": "perplexity/pplx-decider-flash-v1.3:free",
+      "name": "Perplexity: Decider Flash V1.3 (free)",
+      "canonical_slug": "perplexity/pplx-decider-flash-v1.3-20261112",
+      "context": 262144,
+      "prompt": "0",
+      "request": "0",
+      "webSearch": "0",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "expiration_date": null,
+      "gateway_model": "pplx-decider-flash-v1.3:free"
+    },
+    {
+      "id": "~perplexity/pplx-decider-latest",
+      "name": "Perplexity: Decider Latest",
+      "canonical_slug": "~perplexity/pplx-decider-latest",
+      "context": 262144,
+      "prompt": "0.00000002",
+      "request": "0",
+      "webSearch": "0",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "expiration_date": null,
+      "gateway_model": "pplx-decider-latest"
+    },
+    {
+      "id": "perplexity/pplx-decider-v1.2",
+      "name": "Perplexity: Decider V1.2",
+      "canonical_slug": "perplexity/pplx-decider-v1.2-20261016",
+      "context": 262144,
+      "prompt": "0.00000002",
+      "request": "0",
+      "webSearch": "0",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "expiration_date": null,
+      "gateway_model": "pplx-decider-v1.2"
+    },
+    {
+      "id": "perplexity/pplx-decider-v1.3:free",
+      "name": "Perplexity: Decider V1.3 (free)",
+      "canonical_slug": "perplexity/pplx-decider-v1.3-20261112",
+      "context": 262144,
+      "prompt": "0",
+      "request": "0",
+      "webSearch": "0",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "expiration_date": null,
+      "gateway_model": "pplx-decider-v1.3:free"
+    },
+    {
+      "id": "morph/reflex",
+      "name": "Morph: Reflex",
+      "canonical_slug": "morph/reflex-20261103",
+      "context": 65536,
+      "prompt": "0.000000042",
+      "request": "0",
+      "webSearch": "0",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "expiration_date": null,
+      "gateway_model": "reflex"
+    },
+    {
+      "id": "upstage/solar-decide",
+      "name": "Upstage: Solar Decide",
+      "canonical_slug": "upstage/solar-decide-20260928",
+      "context": 524288,
+      "prompt": "0.00000005",
+      "request": "0",
+      "webSearch": "0",
+      "input_modalities": [
+        "text"
+      ],
+      "expiration_date": null,
+      "gateway_model": "solar-decide"
+    },
+    {
+      "id": "upstage/solar-decide-flash",
+      "name": "Upstage: Solar Decide Flash",
+      "canonical_slug": "upstage/solar-decide-flash-20261008",
+      "context": 524288,
+      "prompt": "0.00000005",
+      "request": "0",
+      "webSearch": "0",
+      "input_modalities": [
+        "text"
+      ],
+      "expiration_date": null,
+      "gateway_model": "solar-decide-flash"
+    },
+    {
+      "id": "respan/span-01",
+      "name": "Respan: Span-01",
+      "canonical_slug": "respan/span-01-20260925",
+      "context": 0,
+      "prompt": "0.00000002",
+      "request": "0",
+      "webSearch": "0",
+      "input_modalities": [
+        "text"
+      ],
+      "expiration_date": null,
+      "gateway_model": "span-01"
+    },
+    {
+      "id": "respan/span-01-lite",
+      "name": "Respan: Span-01 Lite",
+      "canonical_slug": "respan/span-01-lite-20260925",
+      "context": 0,
+      "prompt": "0",
+      "request": "0",
+      "webSearch": "0",
+      "input_modalities": [
+        "text"
+      ],
+      "expiration_date": null,
+      "gateway_model": "span-01-lite"
+    },
+    {
+      "id": "respan/span-01-lite:free",
+      "name": "Respan: Span-01 Lite (free)",
+      "canonical_slug": "respan/span-01-lite-20260925",
+      "context": 0,
+      "prompt": "0",
+      "request": "0",
+      "webSearch": "0",
+      "input_modalities": [
+        "text"
+      ],
+      "expiration_date": null,
+      "gateway_model": "span-01-lite:free"
+    },
+    {
+      "id": "respan/span-02",
+      "name": "Respan: Span-02",
+      "canonical_slug": "respan/span-02-20261015",
+      "context": 131072,
+      "prompt": "0.00000001",
+      "request": "0",
+      "webSearch": "0",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "expiration_date": null,
+      "gateway_model": "span-02"
+    },
+    {
+      "id": "togethercomputer/tev1-4b-experimental",
+      "name": "Together: Tev1 4B Experimental",
+      "canonical_slug": "togethercomputer/tev1-4b-experimental-20260923",
+      "context": 32768,
+      "prompt": "0.000000042",
+      "request": "0",
+      "webSearch": "0",
+      "input_modalities": [
+        "text"
+      ],
+      "expiration_date": null,
+      "gateway_model": "tev1-4b-experimental"
     }
   ],
   "excluded": [

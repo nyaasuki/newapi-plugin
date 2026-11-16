@@ -18,16 +18,22 @@ test/e2e/                          端到端测试：真实 New API 服务 + 本
 ## 安装
 
 1. New API 后台 → 任务插件 → 上传 `plugins/tasks/decision/1.0.0/plugin.js`（或 `POST /api/plugin/task`，body 为 `{"source": "..."}`）。
-2. 新建渠道：类型选「任务插件 (61)」，绑定插件 `decision`，密钥填 OpenRouter API Key，API 地址留空（默认 `https://openrouter.ai`），模型列表填要开放的模型。
-3. 定价：每个模型使用任务用量表达式计费，可直接复制 `tools/pricing.suggested.json` 中的表达式：
-   - `by_input_tokens`：按 OpenRouter 标价的输入 token 单价，例如 `liquid/d1.1` 为 `tier("base", u("input_tokens") * 0.02 / 1000000)`。
+2. 新建渠道：类型选「任务插件 (61)」，绑定插件 `decision`，密钥填 OpenRouter API Key，API 地址留空（默认 `https://openrouter.ai`），模型列表填要开放的模型（用下面说的 New API 模型名，如 `d1.1`）。
+3. 定价：每个模型使用任务用量表达式计费，可直接复制 `tools/pricing.suggested.json` 中的表达式（按 New API 模型名索引，`openrouter_id` 是对应的 OpenRouter ID）：
+   - `by_input_tokens`：按 OpenRouter 标价的输入 token 单价，例如 `d1.1` 为 `tier("base", u("input_tokens") * 0.02 / 1000000)`。
    - `by_upstream_cost`：`tier("base", u("upstream_cost"))`，按 OpenRouter 返回的 `usage.cost` 计费，包含按次费用和联网搜索费用，可乘倍率加价。
-   未定价的模型调用时会返回 `model_price_error`。
+   未定价的模型调用时返回 400（"Model ... price not configured"），不会请求 OpenRouter。
 4. 用 New API 令牌调用：
 
 ```bash
-curl https://your-gateway.example.com/decision/v1/systemone -H "Authorization: Bearer sk-..." -H "Content-Type: application/json" -d '{"model":"liquid/d1.1","state":"The package arrived crushed.","questions":{"refund":{"type":"noul","instructions":"Does the customer want a refund?"}}}'
+curl https://your-gateway.example.com/decision/v1/systemone -H "Authorization: Bearer sk-..." -H "Content-Type: application/json" -d '{"model":"d1.1","state":"The package arrived crushed.","questions":{"refund":{"type":"noul","instructions":"Does the customer want a refund?"}}}'
 ```
+
+## 模型名称
+
+New API 侧的模型名是去掉厂商前缀（和 `~` 别名标记）的 OpenRouter ID：`liquid/d1.1` → `d1.1`，`~typesafe/jev-latest` → `jev-latest`，`perplexity/pplx-decider-v1.3:free` → `pplx-decider-v1.3:free`。客户端调用、渠道模型列表、定价、日志和响应里的 `model` 都用这个名称；插件发给 OpenRouter 时换回完整 ID。完整对照表见 [插件 README](plugins/tasks/decision/README.zh-CN.md)。
+
+同步脚本会检查名称是否唯一；如果以后两个模型去掉前缀后重名，这两个模型会保留完整 ID 并给出警告。注意 TypeSafe 官方插件也声明了 `jev-latest`，两个插件同时安装时需要用 `decision::jev-latest` 单独定价。
 
 ## 白名单同步
 
@@ -61,7 +67,7 @@ node tools/sync-models.mjs
 node test/e2e/run.mjs --server http://127.0.0.1:13000
 ```
 
-覆盖：`liquid/d1.1`、`typesafe/jev-1.14`、`~typesafe/jev-latest`、`:free` 变体都能拿到结构化答案；转发地址、密钥、请求体和 state 字段顺序与上游协议一致；`refusal` 答案透传；白名单外模型（含 Extractions 专用的 `cloudflare/clairic`）在网关侧返回 400 且不会请求上游；上游 400/402 按 OpenRouter 格式返回；按上游用量结算计费。
+覆盖：`d1.1`、`jev-1.14`、`jev-latest`、`:free` 变体都能拿到结构化答案，响应 `model` 为 New API 模型名，上游收到完整 OpenRouter ID；转发地址、密钥、请求体和 state 字段顺序与上游协议一致；`refusal` 答案透传；白名单外模型（含 Extractions 专用的 `clairic`、完整 ID `liquid/d1.1`）在网关侧返回 400 且不会请求上游；未定价模型被拒绝；上游 400/402/429/502 按 OpenRouter 格式返回；按上游用量结算计费。
 
 加 `--relay http://127.0.0.1:13001`（第二台全新 New API）会再测一层 New API (60) 渠道转发；加 `--real` 会把 A 的渠道换成默认地址 + 无效密钥，真实请求一次 openrouter.ai，期望拿到 OpenRouter 自己的 401。
 

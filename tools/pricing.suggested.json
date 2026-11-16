@@ -2,34 +2,18 @@
   "snapshot": "2026-11-16",
   "plugin": "decision",
   "models": {
-    "baseten/elephant-1": {
-      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.035 / 1000000)",
+    "classify-1": {
+      "openrouter_id": "scaledown/classify-1",
+      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.04 / 1000000)",
       "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
       "list_price": {
-        "input_per_million_usd": 0.035,
+        "input_per_million_usd": 0.04,
         "per_request_usd": 0,
         "per_web_search_usd": 0
       }
     },
-    "baseten/joey-1": {
-      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.01 / 1000000)",
-      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
-      "list_price": {
-        "input_per_million_usd": 0.01,
-        "per_request_usd": 0,
-        "per_web_search_usd": 0
-      }
-    },
-    "baseten/mammoth-1": {
-      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.1 / 1000000)",
-      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
-      "list_price": {
-        "input_per_million_usd": 0.1,
-        "per_request_usd": 0,
-        "per_web_search_usd": 0
-      }
-    },
-    "cloudflare/clef": {
+    "clef": {
+      "openrouter_id": "cloudflare/clef",
       "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.192 / 1000000)",
       "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
       "list_price": {
@@ -38,7 +22,8 @@
         "per_web_search_usd": 0
       }
     },
-    "cloudflare/clef-flash": {
+    "clef-flash": {
+      "openrouter_id": "cloudflare/clef-flash",
       "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.019 / 1000000)",
       "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
       "list_price": {
@@ -47,7 +32,8 @@
         "per_web_search_usd": 0
       }
     },
-    "cloudflare/clef-omni": {
+    "clef-omni": {
+      "openrouter_id": "cloudflare/clef-omni",
       "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.15 / 1000000)",
       "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
       "list_price": {
@@ -56,7 +42,118 @@
         "per_web_search_usd": 0
       }
     },
-    "google/gemini-decision-1": {
+    "d1": {
+      "openrouter_id": "liquid/d1",
+      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.02 / 1000000)",
+      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
+      "list_price": {
+        "input_per_million_usd": 0.02,
+        "per_request_usd": 0,
+        "per_web_search_usd": 0
+      }
+    },
+    "d1-latest": {
+      "openrouter_id": "~liquid/d1-latest",
+      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.02 / 1000000)",
+      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
+      "list_price": {
+        "input_per_million_usd": 0.02,
+        "per_request_usd": 0,
+        "per_web_search_usd": 0
+      }
+    },
+    "d1-ultra": {
+      "openrouter_id": "liquid/d1-ultra",
+      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.042 / 1000000)",
+      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
+      "list_price": {
+        "input_per_million_usd": 0.042,
+        "per_request_usd": 0,
+        "per_web_search_usd": 0
+      }
+    },
+    "d1-ultra-latest": {
+      "openrouter_id": "~liquid/d1-ultra-latest",
+      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.042 / 1000000)",
+      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
+      "list_price": {
+        "input_per_million_usd": 0.042,
+        "per_request_usd": 0,
+        "per_web_search_usd": 0
+      }
+    },
+    "d1.1": {
+      "openrouter_id": "liquid/d1.1",
+      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.02 / 1000000)",
+      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
+      "list_price": {
+        "input_per_million_usd": 0.02,
+        "per_request_usd": 0,
+        "per_web_search_usd": 0
+      }
+    },
+    "decisions-fast": {
+      "openrouter_id": "parallel/decisions-fast",
+      "by_input_tokens": "tier(\"base\", 0.001)",
+      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
+      "list_price": {
+        "input_per_million_usd": 0,
+        "per_request_usd": 0.001,
+        "per_web_search_usd": 0
+      }
+    },
+    "drex-max": {
+      "openrouter_id": "nace-ai/drex-max",
+      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.06 / 1000000)",
+      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
+      "list_price": {
+        "input_per_million_usd": 0.06,
+        "per_request_usd": 0,
+        "per_web_search_usd": 0
+      }
+    },
+    "drex-max-finance": {
+      "openrouter_id": "nace-ai/drex-max-finance",
+      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.06 / 1000000)",
+      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
+      "list_price": {
+        "input_per_million_usd": 0.06,
+        "per_request_usd": 0,
+        "per_web_search_usd": 0
+      }
+    },
+    "drex-v1.5": {
+      "openrouter_id": "nace-ai/drex-v1.5",
+      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.04 / 1000000)",
+      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
+      "list_price": {
+        "input_per_million_usd": 0.04,
+        "per_request_usd": 0,
+        "per_web_search_usd": 0
+      }
+    },
+    "drex-v2.0": {
+      "openrouter_id": "nace-ai/drex-v2.0",
+      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.06 / 1000000)",
+      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
+      "list_price": {
+        "input_per_million_usd": 0.06,
+        "per_request_usd": 0,
+        "per_web_search_usd": 0
+      }
+    },
+    "elephant-1": {
+      "openrouter_id": "baseten/elephant-1",
+      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.035 / 1000000)",
+      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
+      "list_price": {
+        "input_per_million_usd": 0.035,
+        "per_request_usd": 0,
+        "per_web_search_usd": 0
+      }
+    },
+    "gemini-decision-1": {
+      "openrouter_id": "google/gemini-decision-1",
       "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.1 / 1000000)",
       "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
       "list_price": {
@@ -66,115 +163,8 @@
       },
       "note": "Web search is billed per search; only by_upstream_cost covers it."
     },
-    "heygen/heygen-decision-1": {
-      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.14 / 1000000)",
-      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
-      "list_price": {
-        "input_per_million_usd": 0.14,
-        "per_request_usd": 0,
-        "per_web_search_usd": 0
-      }
-    },
-    "heygen/heygen-decision-1-turbo": {
-      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.09 / 1000000)",
-      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
-      "list_price": {
-        "input_per_million_usd": 0.09,
-        "per_request_usd": 0,
-        "per_web_search_usd": 0
-      }
-    },
-    "jaredpalmer/kev-4b": {
-      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.042 / 1000000)",
-      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
-      "list_price": {
-        "input_per_million_usd": 0.042,
-        "per_request_usd": 0,
-        "per_web_search_usd": 0
-      }
-    },
-    "liquid/d1": {
-      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.02 / 1000000)",
-      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
-      "list_price": {
-        "input_per_million_usd": 0.02,
-        "per_request_usd": 0,
-        "per_web_search_usd": 0
-      }
-    },
-    "liquid/d1-ultra": {
-      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.042 / 1000000)",
-      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
-      "list_price": {
-        "input_per_million_usd": 0.042,
-        "per_request_usd": 0,
-        "per_web_search_usd": 0
-      }
-    },
-    "liquid/d1.1": {
-      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.02 / 1000000)",
-      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
-      "list_price": {
-        "input_per_million_usd": 0.02,
-        "per_request_usd": 0,
-        "per_web_search_usd": 0
-      }
-    },
-    "microsoft/microsoft-decision-1": {
-      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.042 / 1000000)",
-      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
-      "list_price": {
-        "input_per_million_usd": 0.042,
-        "per_request_usd": 0,
-        "per_web_search_usd": 0
-      }
-    },
-    "morph/reflex": {
-      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.042 / 1000000)",
-      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
-      "list_price": {
-        "input_per_million_usd": 0.042,
-        "per_request_usd": 0,
-        "per_web_search_usd": 0
-      }
-    },
-    "nace-ai/drex-max": {
-      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.06 / 1000000)",
-      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
-      "list_price": {
-        "input_per_million_usd": 0.06,
-        "per_request_usd": 0,
-        "per_web_search_usd": 0
-      }
-    },
-    "nace-ai/drex-max-finance": {
-      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.06 / 1000000)",
-      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
-      "list_price": {
-        "input_per_million_usd": 0.06,
-        "per_request_usd": 0,
-        "per_web_search_usd": 0
-      }
-    },
-    "nace-ai/drex-v1.5": {
-      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.04 / 1000000)",
-      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
-      "list_price": {
-        "input_per_million_usd": 0.04,
-        "per_request_usd": 0,
-        "per_web_search_usd": 0
-      }
-    },
-    "nace-ai/drex-v2.0": {
-      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.06 / 1000000)",
-      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
-      "list_price": {
-        "input_per_million_usd": 0.06,
-        "per_request_usd": 0,
-        "per_web_search_usd": 0
-      }
-    },
-    "openai/gpt-6-luna-decisions": {
+    "gpt-6-luna-decisions": {
+      "openrouter_id": "openai/gpt-6-luna-decisions",
       "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.1 / 1000000)",
       "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
       "list_price": {
@@ -184,16 +174,58 @@
       },
       "note": "Web search is billed per search; only by_upstream_cost covers it."
     },
-    "parallel/decisions-fast": {
-      "by_input_tokens": "tier(\"base\", 0.001)",
+    "heygen-decision-1": {
+      "openrouter_id": "heygen/heygen-decision-1",
+      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.14 / 1000000)",
       "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
       "list_price": {
-        "input_per_million_usd": 0,
-        "per_request_usd": 0.001,
+        "input_per_million_usd": 0.14,
+        "per_request_usd": 0,
         "per_web_search_usd": 0
       }
     },
-    "perplexity/pplx-decider-flash-v1.2": {
+    "heygen-decision-1-turbo": {
+      "openrouter_id": "heygen/heygen-decision-1-turbo",
+      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.09 / 1000000)",
+      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
+      "list_price": {
+        "input_per_million_usd": 0.09,
+        "per_request_usd": 0,
+        "per_web_search_usd": 0
+      }
+    },
+    "jev-1.13": {
+      "openrouter_id": "typesafe/jev-1.13",
+      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.042 / 1000000)",
+      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
+      "list_price": {
+        "input_per_million_usd": 0.042,
+        "per_request_usd": 0,
+        "per_web_search_usd": 0
+      }
+    },
+    "jev-1.14": {
+      "openrouter_id": "typesafe/jev-1.14",
+      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.042 / 1000000)",
+      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
+      "list_price": {
+        "input_per_million_usd": 0.042,
+        "per_request_usd": 0,
+        "per_web_search_usd": 0
+      }
+    },
+    "jev-latest": {
+      "openrouter_id": "~typesafe/jev-latest",
+      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.042 / 1000000)",
+      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
+      "list_price": {
+        "input_per_million_usd": 0.042,
+        "per_request_usd": 0,
+        "per_web_search_usd": 0
+      }
+    },
+    "joey-1": {
+      "openrouter_id": "baseten/joey-1",
       "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.01 / 1000000)",
       "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
       "list_price": {
@@ -202,61 +234,38 @@
         "per_web_search_usd": 0
       }
     },
-    "perplexity/pplx-decider-flash-v1.3:free": {
-      "by_input_tokens": "tier(\"base\", 0)",
+    "kev-4b": {
+      "openrouter_id": "jaredpalmer/kev-4b",
+      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.042 / 1000000)",
       "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
       "list_price": {
-        "input_per_million_usd": 0,
+        "input_per_million_usd": 0.042,
         "per_request_usd": 0,
         "per_web_search_usd": 0
       }
     },
-    "perplexity/pplx-decider-v1.2": {
-      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.02 / 1000000)",
+    "mammoth-1": {
+      "openrouter_id": "baseten/mammoth-1",
+      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.1 / 1000000)",
       "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
       "list_price": {
-        "input_per_million_usd": 0.02,
+        "input_per_million_usd": 0.1,
         "per_request_usd": 0,
         "per_web_search_usd": 0
       }
     },
-    "perplexity/pplx-decider-v1.3:free": {
-      "by_input_tokens": "tier(\"base\", 0)",
+    "microsoft-decision-1": {
+      "openrouter_id": "microsoft/microsoft-decision-1",
+      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.042 / 1000000)",
       "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
       "list_price": {
-        "input_per_million_usd": 0,
+        "input_per_million_usd": 0.042,
         "per_request_usd": 0,
         "per_web_search_usd": 0
       }
     },
-    "respan/span-01": {
-      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.02 / 1000000)",
-      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
-      "list_price": {
-        "input_per_million_usd": 0.02,
-        "per_request_usd": 0,
-        "per_web_search_usd": 0
-      }
-    },
-    "respan/span-01-lite": {
-      "by_input_tokens": "tier(\"base\", 0)",
-      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
-      "list_price": {
-        "input_per_million_usd": 0,
-        "per_request_usd": 0,
-        "per_web_search_usd": 0
-      }
-    },
-    "respan/span-01-lite:free": {
-      "by_input_tokens": "tier(\"base\", 0)",
-      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
-      "list_price": {
-        "input_per_million_usd": 0,
-        "per_request_usd": 0,
-        "per_web_search_usd": 0
-      }
-    },
-    "respan/span-02": {
+    "pplx-decider-flash-latest": {
+      "openrouter_id": "~perplexity/pplx-decider-flash-latest",
       "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.01 / 1000000)",
       "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
       "list_price": {
@@ -265,16 +274,58 @@
         "per_web_search_usd": 0
       }
     },
-    "scaledown/classify-1": {
-      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.04 / 1000000)",
+    "pplx-decider-flash-v1.2": {
+      "openrouter_id": "perplexity/pplx-decider-flash-v1.2",
+      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.01 / 1000000)",
       "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
       "list_price": {
-        "input_per_million_usd": 0.04,
+        "input_per_million_usd": 0.01,
         "per_request_usd": 0,
         "per_web_search_usd": 0
       }
     },
-    "togethercomputer/tev1-4b-experimental": {
+    "pplx-decider-flash-v1.3:free": {
+      "openrouter_id": "perplexity/pplx-decider-flash-v1.3:free",
+      "by_input_tokens": "tier(\"base\", 0)",
+      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
+      "list_price": {
+        "input_per_million_usd": 0,
+        "per_request_usd": 0,
+        "per_web_search_usd": 0
+      }
+    },
+    "pplx-decider-latest": {
+      "openrouter_id": "~perplexity/pplx-decider-latest",
+      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.02 / 1000000)",
+      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
+      "list_price": {
+        "input_per_million_usd": 0.02,
+        "per_request_usd": 0,
+        "per_web_search_usd": 0
+      }
+    },
+    "pplx-decider-v1.2": {
+      "openrouter_id": "perplexity/pplx-decider-v1.2",
+      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.02 / 1000000)",
+      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
+      "list_price": {
+        "input_per_million_usd": 0.02,
+        "per_request_usd": 0,
+        "per_web_search_usd": 0
+      }
+    },
+    "pplx-decider-v1.3:free": {
+      "openrouter_id": "perplexity/pplx-decider-v1.3:free",
+      "by_input_tokens": "tier(\"base\", 0)",
+      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
+      "list_price": {
+        "input_per_million_usd": 0,
+        "per_request_usd": 0,
+        "per_web_search_usd": 0
+      }
+    },
+    "reflex": {
+      "openrouter_id": "morph/reflex",
       "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.042 / 1000000)",
       "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
       "list_price": {
@@ -283,25 +334,8 @@
         "per_web_search_usd": 0
       }
     },
-    "typesafe/jev-1.13": {
-      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.042 / 1000000)",
-      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
-      "list_price": {
-        "input_per_million_usd": 0.042,
-        "per_request_usd": 0,
-        "per_web_search_usd": 0
-      }
-    },
-    "typesafe/jev-1.14": {
-      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.042 / 1000000)",
-      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
-      "list_price": {
-        "input_per_million_usd": 0.042,
-        "per_request_usd": 0,
-        "per_web_search_usd": 0
-      }
-    },
-    "upstage/solar-decide": {
+    "solar-decide": {
+      "openrouter_id": "upstage/solar-decide",
       "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.05 / 1000000)",
       "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
       "list_price": {
@@ -310,7 +344,8 @@
         "per_web_search_usd": 0
       }
     },
-    "upstage/solar-decide-flash": {
+    "solar-decide-flash": {
+      "openrouter_id": "upstage/solar-decide-flash",
       "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.05 / 1000000)",
       "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
       "list_price": {
@@ -319,7 +354,8 @@
         "per_web_search_usd": 0
       }
     },
-    "~liquid/d1-latest": {
+    "span-01": {
+      "openrouter_id": "respan/span-01",
       "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.02 / 1000000)",
       "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
       "list_price": {
@@ -328,16 +364,28 @@
         "per_web_search_usd": 0
       }
     },
-    "~liquid/d1-ultra-latest": {
-      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.042 / 1000000)",
+    "span-01-lite": {
+      "openrouter_id": "respan/span-01-lite",
+      "by_input_tokens": "tier(\"base\", 0)",
       "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
       "list_price": {
-        "input_per_million_usd": 0.042,
+        "input_per_million_usd": 0,
         "per_request_usd": 0,
         "per_web_search_usd": 0
       }
     },
-    "~perplexity/pplx-decider-flash-latest": {
+    "span-01-lite:free": {
+      "openrouter_id": "respan/span-01-lite:free",
+      "by_input_tokens": "tier(\"base\", 0)",
+      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
+      "list_price": {
+        "input_per_million_usd": 0,
+        "per_request_usd": 0,
+        "per_web_search_usd": 0
+      }
+    },
+    "span-02": {
+      "openrouter_id": "respan/span-02",
       "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.01 / 1000000)",
       "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
       "list_price": {
@@ -346,16 +394,8 @@
         "per_web_search_usd": 0
       }
     },
-    "~perplexity/pplx-decider-latest": {
-      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.02 / 1000000)",
-      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
-      "list_price": {
-        "input_per_million_usd": 0.02,
-        "per_request_usd": 0,
-        "per_web_search_usd": 0
-      }
-    },
-    "~typesafe/jev-latest": {
+    "tev1-4b-experimental": {
+      "openrouter_id": "togethercomputer/tev1-4b-experimental",
       "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.042 / 1000000)",
       "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
       "list_price": {

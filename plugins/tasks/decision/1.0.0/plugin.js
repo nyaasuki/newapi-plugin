@@ -1,56 +1,58 @@
 // OpenRouter Decisions API:
 // https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-request
 // One plugin for every OpenRouter decision model. Clients choose a model with
-// the `model` field; the plugin forwards the request to
-// POST /api/alpha/decisions and returns OpenRouter's reply as it is.
+// the `model` field, by its New API name (d1.1 for liquid/d1.1); the plugin
+// forwards the request to POST /api/alpha/decisions with the OpenRouter ID
+// and returns OpenRouter's reply, with the model named as the client called it.
 
 // BEGIN GENERATED MODEL CATALOG
 // Written by tools/sync-models.mjs from https://openrouter.ai/api/v1/models?output_modalities=decisions.
 // Do not edit by hand; run the sync script and release a new version.
-// Each entry: context length in tokens, and OpenRouter list prices in USD
-// per input token, per request, and per web search.
+// Keyed by the model name New API shows and bills. Each entry: the
+// OpenRouter model ID, context length in tokens, and OpenRouter list
+// prices in USD per input token, per request, and per web search.
 const CATALOG_SNAPSHOT = "2026-11-16";
 const CATALOG = {
-  "baseten/elephant-1": { context: 16384, prompt: 0.000000035, request: 0, webSearch: 0 },
-  "baseten/joey-1": { context: 16384, prompt: 0.00000001, request: 0, webSearch: 0 },
-  "baseten/mammoth-1": { context: 16384, prompt: 0.0000001, request: 0, webSearch: 0 },
-  "cloudflare/clef": { context: 65537, prompt: 0.000000192, request: 0, webSearch: 0 },
-  "cloudflare/clef-flash": { context: 24576, prompt: 0.000000019, request: 0, webSearch: 0 },
-  "cloudflare/clef-omni": { context: 65536, prompt: 0.00000015, request: 0, webSearch: 0 },
-  "google/gemini-decision-1": { context: 262144, prompt: 0.0000001, request: 0, webSearch: 0.014 },
-  "heygen/heygen-decision-1": { context: 131072, prompt: 0.00000014, request: 0, webSearch: 0 },
-  "heygen/heygen-decision-1-turbo": { context: 262144, prompt: 0.00000009, request: 0, webSearch: 0 },
-  "jaredpalmer/kev-4b": { context: 8192, prompt: 0.000000042, request: 0, webSearch: 0 },
-  "liquid/d1": { context: 65536, prompt: 0.00000002, request: 0, webSearch: 0 },
-  "liquid/d1-ultra": { context: 32768, prompt: 0.000000042, request: 0, webSearch: 0 },
-  "liquid/d1.1": { context: 65536, prompt: 0.00000002, request: 0, webSearch: 0 },
-  "microsoft/microsoft-decision-1": { context: 32768, prompt: 0.000000042, request: 0, webSearch: 0 },
-  "morph/reflex": { context: 65536, prompt: 0.000000042, request: 0, webSearch: 0 },
-  "nace-ai/drex-max": { context: 262144, prompt: 0.00000006, request: 0, webSearch: 0 },
-  "nace-ai/drex-max-finance": { context: 262144, prompt: 0.00000006, request: 0, webSearch: 0 },
-  "nace-ai/drex-v1.5": { context: 131072, prompt: 0.00000004, request: 0, webSearch: 0 },
-  "nace-ai/drex-v2.0": { context: 131072, prompt: 0.00000006, request: 0, webSearch: 0 },
-  "openai/gpt-6-luna-decisions": { context: 1050000, prompt: 0.0000001, request: 0, webSearch: 0.01 },
-  "parallel/decisions-fast": { context: 32000, prompt: 0, request: 0.001, webSearch: 0 },
-  "perplexity/pplx-decider-flash-v1.2": { context: 262144, prompt: 0.00000001, request: 0, webSearch: 0 },
-  "perplexity/pplx-decider-flash-v1.3:free": { context: 262144, prompt: 0, request: 0, webSearch: 0 },
-  "perplexity/pplx-decider-v1.2": { context: 262144, prompt: 0.00000002, request: 0, webSearch: 0 },
-  "perplexity/pplx-decider-v1.3:free": { context: 262144, prompt: 0, request: 0, webSearch: 0 },
-  "respan/span-01": { context: 0, prompt: 0.00000002, request: 0, webSearch: 0 },
-  "respan/span-01-lite": { context: 0, prompt: 0, request: 0, webSearch: 0 },
-  "respan/span-01-lite:free": { context: 0, prompt: 0, request: 0, webSearch: 0 },
-  "respan/span-02": { context: 131072, prompt: 0.00000001, request: 0, webSearch: 0 },
-  "scaledown/classify-1": { context: 1000000, prompt: 0.00000004, request: 0, webSearch: 0 },
-  "togethercomputer/tev1-4b-experimental": { context: 32768, prompt: 0.000000042, request: 0, webSearch: 0 },
-  "typesafe/jev-1.13": { context: 262144, prompt: 0.000000042, request: 0, webSearch: 0 },
-  "typesafe/jev-1.14": { context: 262144, prompt: 0.000000042, request: 0, webSearch: 0 },
-  "upstage/solar-decide": { context: 524288, prompt: 0.00000005, request: 0, webSearch: 0 },
-  "upstage/solar-decide-flash": { context: 524288, prompt: 0.00000005, request: 0, webSearch: 0 },
-  "~liquid/d1-latest": { context: 65536, prompt: 0.00000002, request: 0, webSearch: 0 },
-  "~liquid/d1-ultra-latest": { context: 32768, prompt: 0.000000042, request: 0, webSearch: 0 },
-  "~perplexity/pplx-decider-flash-latest": { context: 262144, prompt: 0.00000001, request: 0, webSearch: 0 },
-  "~perplexity/pplx-decider-latest": { context: 262144, prompt: 0.00000002, request: 0, webSearch: 0 },
-  "~typesafe/jev-latest": { context: 262144, prompt: 0.000000042, request: 0, webSearch: 0 },
+  "classify-1": { id: "scaledown/classify-1", context: 1000000, prompt: 0.00000004, request: 0, webSearch: 0 },
+  "clef": { id: "cloudflare/clef", context: 65537, prompt: 0.000000192, request: 0, webSearch: 0 },
+  "clef-flash": { id: "cloudflare/clef-flash", context: 24576, prompt: 0.000000019, request: 0, webSearch: 0 },
+  "clef-omni": { id: "cloudflare/clef-omni", context: 65536, prompt: 0.00000015, request: 0, webSearch: 0 },
+  "d1": { id: "liquid/d1", context: 65536, prompt: 0.00000002, request: 0, webSearch: 0 },
+  "d1-latest": { id: "~liquid/d1-latest", context: 65536, prompt: 0.00000002, request: 0, webSearch: 0 },
+  "d1-ultra": { id: "liquid/d1-ultra", context: 32768, prompt: 0.000000042, request: 0, webSearch: 0 },
+  "d1-ultra-latest": { id: "~liquid/d1-ultra-latest", context: 32768, prompt: 0.000000042, request: 0, webSearch: 0 },
+  "d1.1": { id: "liquid/d1.1", context: 65536, prompt: 0.00000002, request: 0, webSearch: 0 },
+  "decisions-fast": { id: "parallel/decisions-fast", context: 32000, prompt: 0, request: 0.001, webSearch: 0 },
+  "drex-max": { id: "nace-ai/drex-max", context: 262144, prompt: 0.00000006, request: 0, webSearch: 0 },
+  "drex-max-finance": { id: "nace-ai/drex-max-finance", context: 262144, prompt: 0.00000006, request: 0, webSearch: 0 },
+  "drex-v1.5": { id: "nace-ai/drex-v1.5", context: 131072, prompt: 0.00000004, request: 0, webSearch: 0 },
+  "drex-v2.0": { id: "nace-ai/drex-v2.0", context: 131072, prompt: 0.00000006, request: 0, webSearch: 0 },
+  "elephant-1": { id: "baseten/elephant-1", context: 16384, prompt: 0.000000035, request: 0, webSearch: 0 },
+  "gemini-decision-1": { id: "google/gemini-decision-1", context: 262144, prompt: 0.0000001, request: 0, webSearch: 0.014 },
+  "gpt-6-luna-decisions": { id: "openai/gpt-6-luna-decisions", context: 1050000, prompt: 0.0000001, request: 0, webSearch: 0.01 },
+  "heygen-decision-1": { id: "heygen/heygen-decision-1", context: 131072, prompt: 0.00000014, request: 0, webSearch: 0 },
+  "heygen-decision-1-turbo": { id: "heygen/heygen-decision-1-turbo", context: 262144, prompt: 0.00000009, request: 0, webSearch: 0 },
+  "jev-1.13": { id: "typesafe/jev-1.13", context: 262144, prompt: 0.000000042, request: 0, webSearch: 0 },
+  "jev-1.14": { id: "typesafe/jev-1.14", context: 262144, prompt: 0.000000042, request: 0, webSearch: 0 },
+  "jev-latest": { id: "~typesafe/jev-latest", context: 262144, prompt: 0.000000042, request: 0, webSearch: 0 },
+  "joey-1": { id: "baseten/joey-1", context: 16384, prompt: 0.00000001, request: 0, webSearch: 0 },
+  "kev-4b": { id: "jaredpalmer/kev-4b", context: 8192, prompt: 0.000000042, request: 0, webSearch: 0 },
+  "mammoth-1": { id: "baseten/mammoth-1", context: 16384, prompt: 0.0000001, request: 0, webSearch: 0 },
+  "microsoft-decision-1": { id: "microsoft/microsoft-decision-1", context: 32768, prompt: 0.000000042, request: 0, webSearch: 0 },
+  "pplx-decider-flash-latest": { id: "~perplexity/pplx-decider-flash-latest", context: 262144, prompt: 0.00000001, request: 0, webSearch: 0 },
+  "pplx-decider-flash-v1.2": { id: "perplexity/pplx-decider-flash-v1.2", context: 262144, prompt: 0.00000001, request: 0, webSearch: 0 },
+  "pplx-decider-flash-v1.3:free": { id: "perplexity/pplx-decider-flash-v1.3:free", context: 262144, prompt: 0, request: 0, webSearch: 0 },
+  "pplx-decider-latest": { id: "~perplexity/pplx-decider-latest", context: 262144, prompt: 0.00000002, request: 0, webSearch: 0 },
+  "pplx-decider-v1.2": { id: "perplexity/pplx-decider-v1.2", context: 262144, prompt: 0.00000002, request: 0, webSearch: 0 },
+  "pplx-decider-v1.3:free": { id: "perplexity/pplx-decider-v1.3:free", context: 262144, prompt: 0, request: 0, webSearch: 0 },
+  "reflex": { id: "morph/reflex", context: 65536, prompt: 0.000000042, request: 0, webSearch: 0 },
+  "solar-decide": { id: "upstage/solar-decide", context: 524288, prompt: 0.00000005, request: 0, webSearch: 0 },
+  "solar-decide-flash": { id: "upstage/solar-decide-flash", context: 524288, prompt: 0.00000005, request: 0, webSearch: 0 },
+  "span-01": { id: "respan/span-01", context: 0, prompt: 0.00000002, request: 0, webSearch: 0 },
+  "span-01-lite": { id: "respan/span-01-lite", context: 0, prompt: 0, request: 0, webSearch: 0 },
+  "span-01-lite:free": { id: "respan/span-01-lite:free", context: 0, prompt: 0, request: 0, webSearch: 0 },
+  "span-02": { id: "respan/span-02", context: 131072, prompt: 0.00000001, request: 0, webSearch: 0 },
+  "tev1-4b-experimental": { id: "togethercomputer/tev1-4b-experimental", context: 32768, prompt: 0.000000042, request: 0, webSearch: 0 },
 };
 // END GENERATED MODEL CATALOG
 
@@ -117,8 +119,8 @@ export const meta = {
   ],
   usageSchema: USAGE_SCHEMA,
   usageExamples: [
-    { label: "liquid/d1.1 · 1k tokens", facts: { input_tokens: 1000, upstream_cost: 0.00002 } },
-    { label: "typesafe/jev-1.14 · 1k tokens", facts: { input_tokens: 1000, upstream_cost: 0.000042 } },
+    { label: "d1.1 · 1k tokens", facts: { input_tokens: 1000, upstream_cost: 0.00002 } },
+    { label: "jev-1.14 · 1k tokens", facts: { input_tokens: 1000, upstream_cost: 0.000042 } },
   ],
 };
 
@@ -162,16 +164,33 @@ function decisionBody(body, model) {
   return request;
 }
 
-function upstreamModel(ctx) {
+// The catalog entry for the model the channel executes: a New API model name
+// such as d1.1, or a full OpenRouter ID such as liquid/d1.1 that a channel
+// mapping points to.
+function findModel(ctx) {
   const model = ctx.upstreamModel || ctx.model;
-  if (!Object.prototype.hasOwnProperty.call(CATALOG, model))
-    throw new Error("Unsupported decision model " + model + "; use a model from the OpenRouter Decision plugin whitelist or map an alias to one");
-  return model;
+  if (Object.prototype.hasOwnProperty.call(CATALOG, model)) return { name: model, entry: CATALOG[model] };
+  for (const name of MODELS) {
+    if (CATALOG[name].id === model) return { name: name, entry: CATALOG[name] };
+  }
+  return null;
 }
 
+function requireModel(ctx) {
+  const found = findModel(ctx);
+  if (!found)
+    throw new Error(
+      "Unsupported decision model " + (ctx.upstreamModel || ctx.model) + "; use a model from the OpenRouter Decision plugin whitelist or map an alias to one",
+    );
+  return found;
+}
+
+// OpenRouter takes the full model ID. Another New API gateway takes the
+// plugin's own model name, as its clients do.
 function decisionRequest(ctx) {
   const body = validateRequest(ctx.requestBody);
-  return decisionBody(body, upstreamModel(ctx));
+  const found = requireModel(ctx);
+  return decisionBody(body, ctx.upstream && ctx.upstream.kind === "new_api" ? found.name : found.entry.id);
 }
 
 function contextTokens(entry) {
@@ -214,9 +233,13 @@ export function parseSubmitResponse(ctx, response) {
   // its shape is the model's own.
   if (!isObject(body) || !isObject(body.answers)) throw new Error("OpenRouter response is missing answers");
   if (!ctx.publicTaskId) throw new Error("Missing gateway request ID");
+  // The reply names the model as the client called it, such as d1.1.
+  const data = {};
+  for (const field of Object.keys(body)) data[field] = field === "model" ? ctx.model : body[field];
+  if (data.model === undefined) data.model = ctx.model;
   return {
     taskId: ctx.publicTaskId,
-    taskData: body,
+    taskData: data,
     immediate: { status: "SUCCESS", progress: "100%" },
   };
 }
@@ -224,10 +247,9 @@ export function parseSubmitResponse(ctx, response) {
 // Reserves the model's full context at list price; completion settles on the
 // usage OpenRouter reports.
 export function extractUsage(ctx) {
-  const model = upstreamModel(ctx);
+  const entry = requireModel(ctx).entry;
   validateRequest(ctx.requestBody);
   if (ctx.usagePurpose === "billing_ratios") return null;
-  const entry = CATALOG[model];
   const tokens = contextTokens(entry);
   return { input_tokens: tokens, upstream_cost: roundCost(listCost(entry, tokens, entry.webSearch > 0 ? 1 : 0)) };
 }
@@ -240,10 +262,9 @@ export function extractUsageOnComplete(ctx, result, body) {
   if (!Number.isInteger(tokens) || tokens < 0) throw new Error("OpenRouter input token usage is missing or invalid");
   let cost = usage.cost;
   if (typeof cost !== "number" || !isFinite(cost) || cost < 0) {
-    const model = ctx.upstreamModel || ctx.model;
-    const entry = CATALOG[model];
-    if (!entry) throw new Error("OpenRouter cost is missing and the model has no list price");
-    cost = listCost(entry, tokens, 0);
+    const found = findModel(ctx);
+    if (!found) throw new Error("OpenRouter cost is missing and the model has no list price");
+    cost = listCost(found.entry, tokens, 0);
   }
   return { input_tokens: tokens, upstream_cost: roundCost(cost) };
 }

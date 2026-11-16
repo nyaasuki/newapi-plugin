@@ -13,7 +13,9 @@
 //
 // A model belongs on the whitelist when its catalog entry lists the endpoint
 // /api/alpha/decisions. Entries served only by /api/alpha/extractions are left
-// out. `:free` variants and `~` aliases are kept as OpenRouter lists them.
+// out. `:free` variants and `~` aliases are kept. In New API each model is
+// named by its OpenRouter ID without the vendor prefix (liquid/d1.1 is d1.1);
+// the plugin sends the full ID to OpenRouter.
 //
 // Also writes tools/models.snapshot.json (the catalog subset used) and
 // tools/pricing.suggested.json (billing expressions from list prices).
@@ -132,8 +134,23 @@ function selectModels(entries) {
       expiration_date: entry.expiration_date || null,
     });
   }
-  kept.sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+  // New API names each model by its OpenRouter ID without the vendor prefix
+  // and the ~ alias marker: liquid/d1.1 is d1.1, ~typesafe/jev-latest is
+  // jev-latest. A short name two models would share keeps the full IDs.
+  const counts = {};
+  for (const model of kept) counts[shortName(model.id)] = (counts[shortName(model.id)] || 0) + 1;
+  for (const model of kept) {
+    const short = shortName(model.id);
+    model.gateway_model = short && counts[short] === 1 ? short : model.id;
+    if (model.gateway_model === model.id) console.warn("warning: " + model.id + " keeps its full ID because its short name is not unique");
+  }
+  kept.sort((a, b) => (a.gateway_model < b.gateway_model ? -1 : a.gateway_model > b.gateway_model ? 1 : 0));
   return { kept, excluded };
+}
+
+function shortName(id) {
+  const slash = id.indexOf("/");
+  return slash < 0 ? id.replace(/^~/, "") : id.slice(slash + 1);
 }
 
 function renderBlock(models, date, source) {
@@ -141,16 +158,19 @@ function renderBlock(models, date, source) {
     BEGIN,
     "// Written by tools/sync-models.mjs from " + source + ".",
     "// Do not edit by hand; run the sync script and release a new version.",
-    "// Each entry: context length in tokens, and OpenRouter list prices in USD",
-    "// per input token, per request, and per web search.",
+    "// Keyed by the model name New API shows and bills. Each entry: the",
+    "// OpenRouter model ID, context length in tokens, and OpenRouter list",
+    "// prices in USD per input token, per request, and per web search.",
     'const CATALOG_SNAPSHOT = "' + date + '";',
     "const CATALOG = {",
   ];
   for (const model of models) {
     lines.push(
       "  " +
+        JSON.stringify(model.gateway_model) +
+        ": { id: " +
         JSON.stringify(model.id) +
-        ": { context: " +
+        ", context: " +
         model.context +
         ", prompt: " +
         model.prompt +
@@ -192,7 +212,8 @@ function suggestedPricing(models) {
     if (Number(model.prompt) > 0) terms.push('u("input_tokens") * ' + perMillion(model.prompt) + " / 1000000");
     if (Number(model.request) > 0) terms.push(String(Number(model.request)));
     const byTokens = 'tier("base", ' + (terms.length ? terms.join(" + ") : "0") + ")";
-    result[model.id] = {
+    result[model.gateway_model] = {
+      openrouter_id: model.id,
       by_input_tokens: byTokens,
       by_upstream_cost: 'tier("base", u("upstream_cost"))',
       list_price: {
@@ -216,7 +237,7 @@ async function main() {
   const source = readFileSync(pluginPath, "utf8");
   const current = readBlock(source);
   const before = blockModels(current.text);
-  const after = kept.map((model) => model.id);
+  const after = kept.map((model) => model.gateway_model);
   const added = after.filter((id) => !before.includes(id));
   const removed = before.filter((id) => !after.includes(id));
   const sourceLabel = /^https?:\/\//.test(args.from) ? args.from : DEFAULT_SOURCE;
