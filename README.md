@@ -5,7 +5,7 @@
 | 插件 | Key | 用途 | 接口 | 最新版本 |
 | --- | --- | --- | --- | --- |
 | [APIMart](plugins/tasks/nyaasuki_apimart/README.zh-CN.md) | `nyaasuki_apimart` | 接入 APIMart 图像模型：GPT-Image、Nano Banana、Imagen、Seedream、FLUX、Qwen、万相、Grok Imagine 等 55 个模型名 | OpenAI 图片接口 `/v1/images/generations`、`/v1/images/edits`，以及 `/v1/tasks/nyaasuki_apimart` | 1.2.0 |
-| [OpenRouter Decision](plugins/tasks/nyaasuki_decision/README.zh-CN.md) | `nyaasuki_decision` | 接入 OpenRouter 全部 40 个决策模型：Jev、Liquid d1.1、Cloudflare Clef、Perplexity Decider 等 | `POST /decision/v1/systemone` | 1.0.0 |
+| [OpenRouter Decision](plugins/tasks/nyaasuki_decision/README.zh-CN.md) | `nyaasuki_decision` | 接入 OpenRouter 的 39 个决策模型：Jev、Liquid d1.1、Cloudflare Clef、Perplexity Decider 等 | `POST /decision/v1/systemone` | 1.1.0 |
 
 每个插件的渠道配置、模型列表、计费和调用示例见各自的 README（[APIMart](plugins/tasks/nyaasuki_apimart/README.zh-CN.md) · [OpenRouter Decision](plugins/tasks/nyaasuki_decision/README.zh-CN.md)，英文版为同目录的 `README.md`）。
 
@@ -29,7 +29,7 @@ https://raw.githubusercontent.com/nyaasuki/newapi-plugin/main/index.json
 
 ```text
 https://raw.githubusercontent.com/nyaasuki/newapi-plugin/main/plugins/tasks/nyaasuki_apimart/1.2.0/plugin.js
-https://raw.githubusercontent.com/nyaasuki/newapi-plugin/main/plugins/tasks/nyaasuki_decision/1.0.0/plugin.js
+https://raw.githubusercontent.com/nyaasuki/newapi-plugin/main/plugins/tasks/nyaasuki_decision/1.1.0/plugin.js
 ```
 
 也可以下载 `plugin.js` 后上传或粘贴源码。无论哪种方式，安装前请自行检查源码。

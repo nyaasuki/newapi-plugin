@@ -21,7 +21,7 @@ Answers typed questions about text, data or media with any decision model on Ope
 | `POST /decision/v1/systemone` | Sends a Decisions request to OpenRouter and returns its answers and usage. |
 
 In New API each model is named by its OpenRouter ID without the vendor prefix: clients call `d1.1`, and the gateway shows and bills `d1.1`, while OpenRouter receives `liquid/d1.1`. The reply's `model` field also says `d1.1`.
-The plugin serves the 40 models that OpenRouter's catalog listed for the Decisions API on 2026-11-16:
+The plugin serves 39 of the models that OpenRouter's catalog listed for the Decisions API on 2026-11-16:
 
 | New API model | OpenRouter ID |
 | --- | --- |
@@ -35,7 +35,6 @@ The plugin serves the 40 models that OpenRouter's catalog listed for the Decisio
 | `heygen-decision-1` | `heygen/heygen-decision-1` |
 | `heygen-decision-1-turbo` | `heygen/heygen-decision-1-turbo` |
 | `kev-4b` | `jaredpalmer/kev-4b` |
-| `d1` | `liquid/d1` |
 | `d1-latest` | `~liquid/d1-latest` |
 | `d1-ultra` | `liquid/d1-ultra` |
 | `d1-ultra-latest` | `~liquid/d1-ultra-latest` |
@@ -66,7 +65,7 @@ The plugin serves the 40 models that OpenRouter's catalog listed for the Decisio
 | `solar-decide` | `upstage/solar-decide` |
 | `solar-decide-flash` | `upstage/solar-decide-flash` |
 
-`cloudflare/clairic` is in the catalog but serves only the Extractions API, so the plugin leaves it out. OpenRouter lists `liquid/d1` as expiring on 2026-11-20.
+`cloudflare/clairic` is in the catalog but serves only the Extractions API, so the plugin leaves it out. `liquid/d1` is left out because OpenRouter retires it on 2026-11-20; use `d1.1`. Version 1.0.0 still lists `d1`.
 A model outside this list, including a full OpenRouter ID such as `liquid/d1.1`, gets a 400 error from the gateway and never reaches OpenRouter.
 The TypeSafe plugin also declares `jev-latest`. When both plugins are installed, the model-level price of `jev-latest` applies to both; set a provider price for `nyaasuki_decision::jev-latest` to price this plugin's calls separately.
 
@@ -86,7 +85,7 @@ When the request arrives, the gateway reserves quota for the model's full contex
 
 ### Price sync
 
-The prices of all 40 models can come from New API's upstream price sync instead of being typed in. The repository publishes a price feed in the format of New API's `/api/ratio_config`, rebuilt from OpenRouter's catalog:
+The prices of all 39 models can come from New API's upstream price sync instead of being typed in. The repository publishes a price feed in the format of New API's `/api/ratio_config`, rebuilt from OpenRouter's catalog:
 
 ```text
 https://raw.githubusercontent.com/nyaasuki/newapi-plugin/main/pricing/nyaasuki_decision.json

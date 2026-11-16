@@ -8,13 +8,20 @@
 // gateway A. With --real, gateway A finally switches to a 61 channel with an
 // empty address and a dummy key, so one request reaches https://openrouter.ai
 // and must come back as OpenRouter's 401.
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { startMock, MOCK_KEY } from "./mock-openrouter.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, "..", "..", "..");
+
+// The newest version directory of a plugin.
+function latestVersion(dir) {
+  const versions = readdirSync(dir).filter((name) => /^\d+\.\d+\.\d+$/.test(name));
+  versions.sort((a, b) => a.split(".").map(Number).reduce((r, v, i) => r || v - b.split(".").map(Number)[i], 0));
+  return versions[versions.length - 1];
+}
 const argv = process.argv.slice(2);
 const option = (name) => {
   const index = argv.indexOf("--" + name);
@@ -24,7 +31,7 @@ const SERVER_A = (option("server") || "http://127.0.0.1:13000").replace(/\/+$/, 
 const SERVER_B = option("relay") ? option("relay").replace(/\/+$/, "") : null;
 const REAL = argv.includes("--real");
 const MOCK_PORT = Number(option("mock-port") || 18080);
-const PLUGIN_PATH = resolve(option("plugin") || join(root, "plugins/tasks/nyaasuki_decision/1.0.0/plugin.js"));
+const PLUGIN_PATH = resolve(option("plugin") || join(root, "plugins/tasks/nyaasuki_decision", latestVersion(join(root, "plugins/tasks/nyaasuki_decision")), "plugin.js"));
 const ADMIN = { username: "e2eroot", password: "E2e-Test-Pass-2026" };
 const QUOTA_PER_USD = 500000;
 
@@ -218,6 +225,11 @@ async function testGatewayA(a, token, requests) {
   reply = await a.decide(token, { model: "liquid/d1.1", state: "hello", questions: { q: { type: "noul" } } });
   check("the full OpenRouter ID liquid/d1.1 is not a New API model name (400)", reply.status === 400, reply.body);
   note("error body: " + reply.text);
+  if (!plugin.meta.models.includes("d1")) {
+    reply = await a.decide(token, { model: "d1", state: "hello", questions: { q: { type: "noul" } } });
+    check("the retired d1 (liquid/d1) is rejected with 400", reply.status === 400, reply.body);
+    note("error body: " + reply.text);
+  }
   reply = await a.decide(token, { model: "openai/gpt-4o", state: "hello", questions: { q: { type: "noul" } } });
   check("a model not on the whitelist is rejected with 400", reply.status === 400, reply.body);
   note("error body: " + reply.text);
@@ -278,7 +290,7 @@ async function main() {
     const a = new Gateway(SERVER_A);
     await a.init();
     const installed = await a.must("GET", "/api/plugin/task/nyaasuki_decision");
-    check("plugin installed as OpenRouter Decision 1.0.0", JSON.stringify(installed).includes("OpenRouter Decision"), installed);
+    check("plugin installed as OpenRouter Decision " + plugin.meta.version, JSON.stringify(installed).includes("OpenRouter Decision") && JSON.stringify(installed).includes(plugin.meta.version), installed);
     const mockChannelId = await a.addChannel({
       type: 61,
       name: "openrouter-mock",

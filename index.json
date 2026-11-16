@@ -1076,7 +1076,6 @@
             "clef",
             "clef-flash",
             "clef-omni",
-            "d1",
             "d1-latest",
             "d1-ultra",
             "d1-ultra-latest",
@@ -1155,7 +1154,6 @@
         "clef",
         "clef-flash",
         "clef-omni",
-        "d1",
         "d1-latest",
         "d1-ultra",
         "d1-ultra-latest",
@@ -1195,8 +1193,37 @@
       "task": true,
       "provider": false,
       "transform": false,
-      "latest": "1.0.0",
+      "latest": "1.1.0",
       "versions": [
+        {
+          "version": "1.1.0",
+          "path": "plugins/tasks/nyaasuki_decision/1.1.0/plugin.js",
+          "sha256": "1729b2a3b41d84ee888be659598a82ef6f9010b8308c885694e921bf4e4f8da8",
+          "minApiVersion": 1,
+          "kind": "task",
+          "baseUrl": "https://openrouter.ai",
+          "auth": "api_key",
+          "readme": {
+            "path": "plugins/tasks/nyaasuki_decision/README.md",
+            "sha256": "ed0cd783780be9de75e34db67ad329bd6aa68d16a541888d3bc13d5081cacced",
+            "translations": {
+              "zh-CN": {
+                "path": "plugins/tasks/nyaasuki_decision/README.zh-CN.md",
+                "sha256": "b3d01822c1d61a556c53eac0f408db17a2f7c9f3a0e09abbf1407583c8983190"
+              }
+            }
+          },
+          "changelog": {
+            "path": "plugins/tasks/nyaasuki_decision/1.1.0/CHANGELOG.md",
+            "sha256": "c5f5095ce4413e25dbb0d8d517af2c321018af74d3f36eb7be1768d48970f3d2",
+            "translations": {
+              "zh-CN": {
+                "path": "plugins/tasks/nyaasuki_decision/1.1.0/CHANGELOG.zh-CN.md",
+                "sha256": "a3f714c9dee6ab912adf8b8a238fd88853178dedd98b32984e48f9a77da9773e"
+              }
+            }
+          }
+        },
         {
           "version": "1.0.0",
           "path": "plugins/tasks/nyaasuki_decision/1.0.0/plugin.js",
@@ -1207,11 +1234,11 @@
           "auth": "api_key",
           "readme": {
             "path": "plugins/tasks/nyaasuki_decision/README.md",
-            "sha256": "851b69241d9780e287399643571b014e7e2d9d7bb2b567d1a962aee7b5c9d2c6",
+            "sha256": "ed0cd783780be9de75e34db67ad329bd6aa68d16a541888d3bc13d5081cacced",
             "translations": {
               "zh-CN": {
                 "path": "plugins/tasks/nyaasuki_decision/README.zh-CN.md",
-                "sha256": "6221c40418e1d952012a9b88ce59368c7c71aa0b1b5f781c4037d10b6b8d510c"
+                "sha256": "b3d01822c1d61a556c53eac0f408db17a2f7c9f3a0e09abbf1407583c8983190"
               }
             }
           },

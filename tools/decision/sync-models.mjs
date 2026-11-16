@@ -46,6 +46,11 @@ const END = "// END GENERATED MODEL CATALOG";
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, "..", "..");
 const FEED_PATH = join(root, "pricing", PLUGIN_KEY + ".json");
+// Models taken off the whitelist ahead of the catalog, with the reason. They
+// stay out of the plugin and the price feed while OpenRouter still lists them.
+const RETIRED = {
+  "liquid/d1": "OpenRouter retires it on 2026-11-20; use d1.1",
+};
 
 function parseArgs(argv) {
   const args = { check: false, pricing: false, plugin: null, from: DEFAULT_SOURCE, date: new Date().toISOString().slice(0, 10) };
@@ -136,6 +141,10 @@ function selectModels(entries) {
     ids.add(entry.id);
     if (!isDecisionModel(entry)) {
       excluded.push({ id: entry.id, endpoints: entry.endpoints || [] });
+      continue;
+    }
+    if (RETIRED[entry.id]) {
+      excluded.push({ id: entry.id, endpoints: entry.endpoints || [], retired: RETIRED[entry.id] });
       continue;
     }
     const pricing = entry.pricing || {};
@@ -340,7 +349,7 @@ async function main() {
   const previousFeed = readFeed();
 
   console.log("catalog entries: " + entries.length + ", decision models: " + kept.length + ", excluded: " + excluded.length);
-  for (const entry of excluded) console.log("  excluded " + entry.id + " (endpoints: " + (entry.endpoints.join(", ") || "none") + ")");
+  for (const entry of excluded) console.log("  excluded " + entry.id + (entry.retired ? " (retired: " + entry.retired + ")" : " (endpoints: " + (entry.endpoints.join(", ") || "none") + ")"));
   for (const id of added) console.log("  + " + id + " (in the catalog, not yet in the plugin)");
   for (const id of removed) console.log("  - " + id + " (in the plugin, no longer in the catalog)");
   for (const model of kept) if (model.expiration_date) console.log("  ! " + model.id + " expires on " + model.expiration_date);

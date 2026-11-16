@@ -20,7 +20,7 @@ locale: zh-CN
 | `POST /decision/v1/systemone` | 把决策请求发给 OpenRouter，返回它的答案和用量。 |
 
 在 New API 里，每个模型的名称是去掉厂商前缀的 OpenRouter ID：客户端调用 `d1.1`，网关里显示和计费的也是 `d1.1`，发给 OpenRouter 的是 `liquid/d1.1`。响应里的 `model` 字段同样是 `d1.1`。
-插件支持 OpenRouter 目录在 2026-11-16 列出的 40 个可通过 Decisions API 调用的模型：
+插件支持 OpenRouter 目录在 2026-11-16 列出的、可通过 Decisions API 调用的模型中的 39 个：
 
 | New API 模型 | OpenRouter ID |
 | --- | --- |
@@ -34,7 +34,6 @@ locale: zh-CN
 | `heygen-decision-1` | `heygen/heygen-decision-1` |
 | `heygen-decision-1-turbo` | `heygen/heygen-decision-1-turbo` |
 | `kev-4b` | `jaredpalmer/kev-4b` |
-| `d1` | `liquid/d1` |
 | `d1-latest` | `~liquid/d1-latest` |
 | `d1-ultra` | `liquid/d1-ultra` |
 | `d1-ultra-latest` | `~liquid/d1-ultra-latest` |
@@ -65,7 +64,7 @@ locale: zh-CN
 | `solar-decide` | `upstage/solar-decide` |
 | `solar-decide-flash` | `upstage/solar-decide-flash` |
 
-目录里的 `cloudflare/clairic` 只支持 Extractions API，插件不收录。OpenRouter 标注 `liquid/d1` 将于 2026-11-20 下架。
+目录里的 `cloudflare/clairic` 只支持 Extractions API，插件不收录。`liquid/d1` 将于 2026-11-20 被 OpenRouter 下架，插件已提前移除，请改用 `d1.1`（1.0.0 版仍包含 `d1`）。
 不在列表里的模型由网关直接返回 400 错误，不会发到 OpenRouter；直接传完整的 OpenRouter ID（例如 `liquid/d1.1`）也会被拒绝。
 TypeSafe 插件也声明了 `jev-latest`。两个插件都安装时，`jev-latest` 的模型级价格对两者都生效；要给本插件单独定价，请为 `nyaasuki_decision::jev-latest` 设置渠道插件价格。
 
@@ -85,7 +84,7 @@ TypeSafe 插件也声明了 `jev-latest`。两个插件都安装时，`jev-lates
 
 ### 价格同步
 
-40 个模型的价格可以用 New API 的上游价格同步导入，不必逐个填写。本仓库按 OpenRouter 官方目录生成了一份价格源，格式与 New API 的 `/api/ratio_config` 相同：
+39 个模型的价格可以用 New API 的上游价格同步导入，不必逐个填写。本仓库按 OpenRouter 官方目录生成了一份价格源，格式与 New API 的 `/api/ratio_config` 相同：
 
 ```text
 https://raw.githubusercontent.com/nyaasuki/newapi-plugin/main/pricing/nyaasuki_decision.json

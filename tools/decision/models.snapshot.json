@@ -67,21 +67,6 @@
       "gateway_model": "clef-omni"
     },
     {
-      "id": "liquid/d1",
-      "name": "LiquidAI: d1",
-      "canonical_slug": "liquid/d1-20260930",
-      "context": 65536,
-      "prompt": "0.00000002",
-      "request": "0",
-      "webSearch": "0",
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "expiration_date": "2026-11-20",
-      "gateway_model": "d1"
-    },
-    {
       "id": "~liquid/d1-latest",
       "name": "LiquidAI: d1 Latest",
       "canonical_slug": "~liquid/d1-latest",
@@ -605,6 +590,13 @@
       "endpoints": [
         "/api/alpha/extractions"
       ]
+    },
+    {
+      "id": "liquid/d1",
+      "endpoints": [
+        "/api/alpha/decisions"
+      ],
+      "retired": "OpenRouter retires it on 2026-11-20; use d1.1"
     }
   ]
 }

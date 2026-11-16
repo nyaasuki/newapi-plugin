@@ -1,6 +1,6 @@
 {
   "snapshot": "2026-11-16",
-  "plugin": "decision",
+  "plugin": "nyaasuki_decision",
   "models": {
     "classify-1": {
       "openrouter_id": "scaledown/classify-1",
@@ -38,16 +38,6 @@
       "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
       "list_price": {
         "input_per_million_usd": 0.15,
-        "per_request_usd": 0,
-        "per_web_search_usd": 0
-      }
-    },
-    "d1": {
-      "openrouter_id": "liquid/d1",
-      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.02 / 1000000)",
-      "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
-      "list_price": {
-        "input_per_million_usd": 0.02,
         "per_request_usd": 0,
         "per_web_search_usd": 0
       }

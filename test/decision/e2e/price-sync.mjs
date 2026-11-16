@@ -11,7 +11,7 @@
 // B, when given, syncs the prices from gateway A's /api/pricing through a New
 // API (60) channel.
 import { createServer } from "node:http";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { dirname, join, normalize, resolve, sep } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -19,6 +19,13 @@ import { startMock, MOCK_KEY } from "./mock-openrouter.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, "..", "..", "..");
+
+// The newest version directory of a plugin.
+function latestVersion(dir) {
+  const versions = readdirSync(dir).filter((name) => /^\d+\.\d+\.\d+$/.test(name));
+  versions.sort((a, b) => a.split(".").map(Number).reduce((r, v, i) => r || v - b.split(".").map(Number)[i], 0));
+  return versions[versions.length - 1];
+}
 const argv = process.argv.slice(2);
 const option = (name, fallback) => {
   const index = argv.indexOf("--" + name);
@@ -29,7 +36,7 @@ const SERVER_B = option("relay", "") ? option("relay").replace(/\/+$/, "") : nul
 const MOCK_PORT = Number(option("mock-port", 18080));
 const FILE_PORT = 18091;
 const FEED_URL = option("feed", "http://127.0.0.1:" + FILE_PORT + "/pricing/nyaasuki_decision.json");
-const PLUGIN_PATH = join(root, "plugins/tasks/nyaasuki_decision/1.0.0/plugin.js");
+const PLUGIN_PATH = join(root, "plugins/tasks/nyaasuki_decision", latestVersion(join(root, "plugins/tasks/nyaasuki_decision")), "plugin.js");
 const ADMIN = { username: "e2eroot", password: "E2e-Test-Pass-2026" };
 const QUOTA_PER_USD = 500000;
 
