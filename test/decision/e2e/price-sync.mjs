@@ -137,8 +137,8 @@ class Gateway {
     await this.must("PATCH", "/api/option/model_pricing", { changes });
     return changes.length;
   }
-  async decide(token, body) {
-    const response = await fetch(this.base + "/decision/v1/systemone", {
+  async decide(token, body, path) {
+    const response = await fetch(this.base + (path || "/v1/systemone"), {
       method: "POST",
       headers: { Authorization: "Bearer " + token, "Content-Type": "application/json" },
       body: JSON.stringify(body),

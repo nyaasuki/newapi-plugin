@@ -113,8 +113,8 @@ class Gateway {
     const key = await this.must("POST", "/api/token/" + id + "/key");
     return "sk-" + String(key.data.key).replace(/^sk-/, "");
   }
-  async decide(token, body) {
-    const response = await fetch(this.base + "/decision/v1/systemone", {
+  async decide(token, body, path) {
+    const response = await fetch(this.base + (path || "/v1/systemone"), {
       method: "POST",
       headers: { Authorization: "Bearer " + token, "Content-Type": "application/json" },
       body: JSON.stringify(body),
@@ -160,6 +160,17 @@ async function testGatewayA(a, token, requests) {
   check("d1.1 reply carries upstream usage and id", reply.body.usage && Number.isInteger(reply.body.usage.input_tokens) && reply.body.id, reply.body);
   check("d1.1 reply names the model d1.1", reply.body.model === "d1.1", reply.body.model);
   const sent = requests[before];
+  const prefixed = await a.decide(token, D11_REQUEST, "/nyaasuki_decision/v1/systemone");
+  check("the key-prefixed /nyaasuki_decision/v1/systemone answers the same way", prefixed.status === 200 && prefixed.body.answers && prefixed.body.answers.team.type === "choice", prefixed.body);
+  // New API answers unknown paths with its web page, so the old path returns
+  // HTML; what matters is that it no longer reaches the plugin.
+  const beforeOld = requests.length;
+  const oldPath = await a.decide(token, D11_REQUEST, "/decision/v1/systemone");
+  check(
+    "the old /decision/v1/systemone path no longer reaches the plugin",
+    !(oldPath.body && oldPath.body.answers) && requests.length === beforeOld,
+    { status: oldPath.status, body: String(oldPath.text || "").slice(0, 80) },
+  );
   check("upstream receives POST /api/alpha/decisions", sent && sent.url === "/api/alpha/decisions", sent && sent.url);
   check("upstream receives the channel's OpenRouter key", sent && sent.headers.authorization === "Bearer " + MOCK_KEY);
   check(

@@ -17,7 +17,8 @@ locale: zh-CN
 
 | 接口 | 用途 |
 | --- | --- |
-| `POST /decision/v1/systemone` | 把决策请求发给 OpenRouter，返回它的答案和用量。 |
+| `POST /v1/systemone` | 把决策请求发给 OpenRouter，返回它的答案和用量。 |
+| `POST /nyaasuki_decision/v1/systemone` | 同上，带插件 key 前缀，只会由本插件处理。 |
 
 在 New API 里，每个模型的名称是去掉厂商前缀的 OpenRouter ID：客户端调用 `d1.1`，网关里显示和计费的也是 `d1.1`，发给 OpenRouter 的是 `liquid/d1.1`。响应里的 `model` 字段同样是 `d1.1`。
 插件支持 OpenRouter 目录在 2026-11-16 列出的、可通过 Decisions API 调用的模型中的 39 个：
@@ -66,7 +67,7 @@ locale: zh-CN
 
 目录里的 `cloudflare/clairic` 只支持 Extractions API，插件不收录。`liquid/d1` 将于 2026-11-20 被 OpenRouter 下架，插件已提前移除，请改用 `d1.1`（1.0.0 版仍包含 `d1`）。
 不在列表里的模型由网关直接返回 400 错误，不会发到 OpenRouter；直接传完整的 OpenRouter ID（例如 `liquid/d1.1`）也会被拒绝。
-TypeSafe 插件也声明了 `jev-latest`。两个插件都安装时，`jev-latest` 的模型级价格对两者都生效；要给本插件单独定价，请为 `nyaasuki_decision::jev-latest` 设置渠道插件价格。
+TypeSafe 插件也提供 `POST /v1/systemone`。两个插件都安装时，每个请求按 `model` 交给声明了该模型的插件。两者都声明了 `jev-latest`：调用它时由提供该模型的渠道决定走哪个插件，所以 `jev-latest` 只在其中一个渠道上开放，或者用 `/nyaasuki_decision/v1/systemone` 调用本插件。`jev-latest` 的模型级价格对两个插件都生效；要给本插件单独定价，请为 `nyaasuki_decision::jev-latest` 设置渠道插件价格。
 
 问题类型有 `choice`、`noul` 和 `score`，Jev 还支持 `box`。每个模型接受哪些问题类型、媒体格式和 `state` 结构，以该模型自身能力为准；OpenRouter 对不支持的请求返回 400。
 错误按 OpenRouter 的格式 `{"error": {"code", "message"}}` 返回给客户端。OpenRouter 的 4xx 错误保留原状态码和原始信息；5xx 错误保留状态码，信息由网关换成通用提示。
@@ -101,7 +102,7 @@ https://raw.githubusercontent.com/nyaasuki/newapi-plugin/main/pricing/nyaasuki_d
 ## 示例
 
 ```bash
-curl https://your-gateway.example.com/decision/v1/systemone \
+curl https://your-gateway.example.com/v1/systemone \
   -H "Authorization: Bearer sk-..." \
   -H "Content-Type: application/json" \
   -d '{

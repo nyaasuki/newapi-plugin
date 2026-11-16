@@ -18,7 +18,8 @@ Answers typed questions about text, data or media with any decision model on Ope
 
 | Endpoint | What it does |
 | --- | --- |
-| `POST /decision/v1/systemone` | Sends a Decisions request to OpenRouter and returns its answers and usage. |
+| `POST /v1/systemone` | Sends a Decisions request to OpenRouter and returns its answers and usage. |
+| `POST /nyaasuki_decision/v1/systemone` | The same, under the plugin key; only this plugin answers it. |
 
 In New API each model is named by its OpenRouter ID without the vendor prefix: clients call `d1.1`, and the gateway shows and bills `d1.1`, while OpenRouter receives `liquid/d1.1`. The reply's `model` field also says `d1.1`.
 The plugin serves 39 of the models that OpenRouter's catalog listed for the Decisions API on 2026-11-16:
@@ -67,7 +68,7 @@ The plugin serves 39 of the models that OpenRouter's catalog listed for the Deci
 
 `cloudflare/clairic` is in the catalog but serves only the Extractions API, so the plugin leaves it out. `liquid/d1` is left out because OpenRouter retires it on 2026-11-20; use `d1.1`. Version 1.0.0 still lists `d1`.
 A model outside this list, including a full OpenRouter ID such as `liquid/d1.1`, gets a 400 error from the gateway and never reaches OpenRouter.
-The TypeSafe plugin also declares `jev-latest`. When both plugins are installed, the model-level price of `jev-latest` applies to both; set a provider price for `nyaasuki_decision::jev-latest` to price this plugin's calls separately.
+The TypeSafe plugin also serves `POST /v1/systemone`. When both plugins are installed, each request goes to the plugin whose models include its `model`. Both declare `jev-latest`: a call for it goes to whichever channel serves it, so offer `jev-latest` on one of the two channels only, or call this plugin at `/nyaasuki_decision/v1/systemone`. The model-level price of `jev-latest` applies to both plugins; set a provider price for `nyaasuki_decision::jev-latest` to price this plugin's calls separately.
 
 Questions use the types `choice`, `noul` and `score`. Jev also answers `box`. Which question types, media parts and `state` shapes a model accepts is up to that model; OpenRouter answers anything else with a 400.
 Errors reach the client as `{"error": {"code", "message"}}`, as OpenRouter writes them. A 4xx error from OpenRouter keeps its status and message. A 5xx error keeps its status, and the gateway replaces the message with a generic one.
@@ -102,7 +103,7 @@ A gateway that reaches this one through a New API (60) channel can sync from it 
 ## Example
 
 ```bash
-curl https://your-gateway.example.com/decision/v1/systemone \
+curl https://your-gateway.example.com/v1/systemone \
   -H "Authorization: Bearer sk-..." \
   -H "Content-Type: application/json" \
   -d '{

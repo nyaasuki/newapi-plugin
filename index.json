@@ -1066,7 +1066,7 @@
       "routes": [
         {
           "method": "POST",
-          "path": "/decision/v1/systemone",
+          "path": "/v1/systemone",
           "type": "submit",
           "decode": "decodeDecision",
           "render": "renderDecision",
@@ -1193,8 +1193,37 @@
       "task": true,
       "provider": false,
       "transform": false,
-      "latest": "1.1.0",
+      "latest": "1.2.0",
       "versions": [
+        {
+          "version": "1.2.0",
+          "path": "plugins/tasks/nyaasuki_decision/1.2.0/plugin.js",
+          "sha256": "40cb88ef4d73b5cbbc318bfed0296b570eddc854188ac619671bfba8ff475591",
+          "minApiVersion": 1,
+          "kind": "task",
+          "baseUrl": "https://openrouter.ai",
+          "auth": "api_key",
+          "readme": {
+            "path": "plugins/tasks/nyaasuki_decision/README.md",
+            "sha256": "2c7b7a7b05155fa3d6ab79387f6088624a664508fb40540755228d33d1937db0",
+            "translations": {
+              "zh-CN": {
+                "path": "plugins/tasks/nyaasuki_decision/README.zh-CN.md",
+                "sha256": "6d6593fc53e9154ef71ffda7cfab96150568af2e45cfd6ae53bec3d7e8afd8f8"
+              }
+            }
+          },
+          "changelog": {
+            "path": "plugins/tasks/nyaasuki_decision/1.2.0/CHANGELOG.md",
+            "sha256": "a82169a9a70dcd267e57e95fb2b7f30af3e0c82982fc51222eab12d700f4f3c7",
+            "translations": {
+              "zh-CN": {
+                "path": "plugins/tasks/nyaasuki_decision/1.2.0/CHANGELOG.zh-CN.md",
+                "sha256": "f56f48d8403355689ee3346d196196b526bede2c1f70922b2f16ae2a8b08e7a1"
+              }
+            }
+          }
+        },
         {
           "version": "1.1.0",
           "path": "plugins/tasks/nyaasuki_decision/1.1.0/plugin.js",
@@ -1205,11 +1234,11 @@
           "auth": "api_key",
           "readme": {
             "path": "plugins/tasks/nyaasuki_decision/README.md",
-            "sha256": "ed0cd783780be9de75e34db67ad329bd6aa68d16a541888d3bc13d5081cacced",
+            "sha256": "2c7b7a7b05155fa3d6ab79387f6088624a664508fb40540755228d33d1937db0",
             "translations": {
               "zh-CN": {
                 "path": "plugins/tasks/nyaasuki_decision/README.zh-CN.md",
-                "sha256": "b3d01822c1d61a556c53eac0f408db17a2f7c9f3a0e09abbf1407583c8983190"
+                "sha256": "6d6593fc53e9154ef71ffda7cfab96150568af2e45cfd6ae53bec3d7e8afd8f8"
               }
             }
           },
@@ -1234,11 +1263,11 @@
           "auth": "api_key",
           "readme": {
             "path": "plugins/tasks/nyaasuki_decision/README.md",
-            "sha256": "ed0cd783780be9de75e34db67ad329bd6aa68d16a541888d3bc13d5081cacced",
+            "sha256": "2c7b7a7b05155fa3d6ab79387f6088624a664508fb40540755228d33d1937db0",
             "translations": {
               "zh-CN": {
                 "path": "plugins/tasks/nyaasuki_decision/README.zh-CN.md",
-                "sha256": "b3d01822c1d61a556c53eac0f408db17a2f7c9f3a0e09abbf1407583c8983190"
+                "sha256": "6d6593fc53e9154ef71ffda7cfab96150568af2e45cfd6ae53bec3d7e8afd8f8"
               }
             }
           },
