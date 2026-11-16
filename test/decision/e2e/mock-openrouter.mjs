@@ -4,6 +4,7 @@
 import { createServer } from "node:http";
 
 export const MOCK_KEY = "sk-or-e2e-mock-key";
+export const MOCK_USER_ID = "user_e2eMockOpenRouterAccount";
 const BOX_MODELS = ["typesafe/jev-1.14", "~typesafe/jev-latest"];
 
 function answerFor(question, id, model) {
@@ -54,6 +55,9 @@ export function startMock(port, catalog) {
       if (!entry) return send(400, { error: { code: 400, message: body.model + " is not a valid model ID" } });
       if (body.state === "__rate_limited__") return send(429, { error: { code: 429, message: "Rate limit exceeded" } });
       if (body.state === "__provider_error__") return send(502, { error: { code: 502, message: "Provider returned error" } });
+      // OpenRouter names the account beside the error object on some refusals.
+      if (body.state === "__terms_of_service__")
+        return send(403, { error: { code: 403, message: "The request is prohibited due to a violation of provider Terms Of Service." }, user_id: MOCK_USER_ID });
       if (body.state === "__insufficient_credits__")
         return send(402, { error: { code: 402, message: "Insufficient credits. Add more using https://openrouter.ai/credits" } });
       const answers = {};

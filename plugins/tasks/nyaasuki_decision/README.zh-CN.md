@@ -70,7 +70,7 @@ locale: zh-CN
 TypeSafe 插件也提供 `POST /v1/systemone`。两个插件都安装时，每个请求按 `model` 交给声明了该模型的插件。两者都声明了 `jev-latest`：调用它时由提供该模型的渠道决定走哪个插件，所以 `jev-latest` 只在其中一个渠道上开放，或者用 `/nyaasuki_decision/v1/systemone` 调用本插件。`jev-latest` 的模型级价格对两个插件都生效；要给本插件单独定价，请为 `nyaasuki_decision::jev-latest` 设置渠道插件价格。
 
 问题类型有 `choice`、`noul` 和 `score`，Jev 还支持 `box`。每个模型接受哪些问题类型、媒体格式和 `state` 结构，以该模型自身能力为准；OpenRouter 对不支持的请求返回 400。
-错误按 OpenRouter 的格式 `{"error": {"code", "message"}}` 返回给客户端。OpenRouter 的 4xx 错误保留原状态码和原始信息；5xx 错误保留状态码，信息由网关换成通用提示。
+错误按 OpenRouter 的格式 `{"error": {"code", "message"}}` 返回给客户端。OpenRouter 的 4xx 错误保留原状态码和原始信息，只返回 `error` 对象：从 1.2.1 起，OpenRouter 放在它旁边的字段（例如 OpenRouter 账号的 `user_id`）会被去掉；5xx 错误保留状态码，信息由网关换成通用提示。
 模型拒绝回答某个问题时，该答案的类型为 `refusal`。
 
 ## 计费

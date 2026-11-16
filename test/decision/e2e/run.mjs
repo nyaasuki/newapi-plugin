@@ -11,7 +11,7 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { startMock, MOCK_KEY } from "./mock-openrouter.mjs";
+import { startMock, MOCK_KEY, MOCK_USER_ID } from "./mock-openrouter.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, "..", "..", "..");
@@ -270,6 +270,13 @@ async function testGatewayA(a, token, requests) {
     check("an upstream " + status + " reaches the client with status " + reply.status, reply.status === status && reply.body.error, reply.body);
     note("error body: " + reply.text);
   }
+  reply = await a.decide(token, { model: "d1.1", state: "__terms_of_service__", questions: { q: { type: "noul" } } });
+  check(
+    "an upstream 403 reaches the client as only its error object, without OpenRouter's user_id",
+    reply.status === 403 && reply.body.error && /Terms Of Service/.test(reply.body.error.message) && Object.keys(reply.body).join() === "error" && !reply.text.includes(MOCK_USER_ID),
+    reply.body,
+  );
+  note("error body: " + reply.text);
 }
 
 async function testGatewayB(b, token) {

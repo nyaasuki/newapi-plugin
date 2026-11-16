@@ -71,7 +71,7 @@ A model outside this list, including a full OpenRouter ID such as `liquid/d1.1`,
 The TypeSafe plugin also serves `POST /v1/systemone`. When both plugins are installed, each request goes to the plugin whose models include its `model`. Both declare `jev-latest`: a call for it goes to whichever channel serves it, so offer `jev-latest` on one of the two channels only, or call this plugin at `/nyaasuki_decision/v1/systemone`. The model-level price of `jev-latest` applies to both plugins; set a provider price for `nyaasuki_decision::jev-latest` to price this plugin's calls separately.
 
 Questions use the types `choice`, `noul` and `score`. Jev also answers `box`. Which question types, media parts and `state` shapes a model accepts is up to that model; OpenRouter answers anything else with a 400.
-Errors reach the client as `{"error": {"code", "message"}}`, as OpenRouter writes them. A 4xx error from OpenRouter keeps its status and message. A 5xx error keeps its status, and the gateway replaces the message with a generic one.
+Errors reach the client as `{"error": {"code", "message"}}`, as OpenRouter writes them. A 4xx error from OpenRouter keeps its status and message. Only the `error` object is passed on; since 1.2.1, fields OpenRouter puts beside it, such as the OpenRouter account's `user_id`, are dropped. A 5xx error keeps its status, and the gateway replaces the message with a generic one.
 An answer can have the type `refusal` when the model declines a question.
 
 ## Billing
