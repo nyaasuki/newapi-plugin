@@ -110,9 +110,9 @@ curl https://your-gateway.example.com/v1/systemone \
     "model": "d1.1",
     "state": {"ticket": "My checkout page shows a blank screen after I click Pay."},
     "questions": {
-      "team": {"type": "choice", "criteria": {"payments": "Checkout or billing", "frontend": "Rendering", "account": "Login"}},
+      "team": {"type": "choice", "instructions": "Which team should handle this ticket?", "criteria": {"payments": "Checkout or billing", "frontend": "Rendering", "account": "Login"}},
       "is_bug": {"type": "noul", "instructions": "Is the customer reporting a defect?"},
-      "urgency": {"type": "score", "criteria": ["Can wait", "This week", "Blocking revenue"]}
+      "urgency": {"type": "score", "instructions": "How urgent is this ticket?", "criteria": ["Can wait", "This week", "Blocking revenue"]}
     }
   }'
 ```
@@ -121,3 +121,4 @@ curl https://your-gateway.example.com/v1/systemone \
 
 - The request takes the top-level fields `model`, `state`, `questions`, `assets`, `provider`, `session_id`, `trace` and `user`. A request with any other top-level field is rejected.
 - The request must be JSON. Images go in `state` as `image_url` parts or in `assets` as base64.
+- Every question needs an `instructions` string, `choice` and `score` questions included. Without it OpenRouter answers 422 `Invalid input` and names the field, such as `questions.team.instructions`.

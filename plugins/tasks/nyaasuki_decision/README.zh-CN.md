@@ -109,9 +109,9 @@ curl https://your-gateway.example.com/v1/systemone \
     "model": "d1.1",
     "state": {"ticket": "My checkout page shows a blank screen after I click Pay."},
     "questions": {
-      "team": {"type": "choice", "criteria": {"payments": "Checkout or billing", "frontend": "Rendering", "account": "Login"}},
+      "team": {"type": "choice", "instructions": "Which team should handle this ticket?", "criteria": {"payments": "Checkout or billing", "frontend": "Rendering", "account": "Login"}},
       "is_bug": {"type": "noul", "instructions": "Is the customer reporting a defect?"},
-      "urgency": {"type": "score", "criteria": ["Can wait", "This week", "Blocking revenue"]}
+      "urgency": {"type": "score", "instructions": "How urgent is this ticket?", "criteria": ["Can wait", "This week", "Blocking revenue"]}
     }
   }'
 ```
@@ -120,3 +120,4 @@ curl https://your-gateway.example.com/v1/systemone \
 
 - 请求的顶层字段限于 `model`、`state`、`questions`、`assets`、`provider`、`session_id`、`trace` 和 `user`。带其他顶层字段的请求会被拒绝。
 - 请求必须是 JSON。图片可以作为 `image_url` 放在 `state` 里，或以 base64 放在 `assets` 里。
+- 每个问题都要写 `instructions`，`choice` 和 `score` 也不例外。缺少时 OpenRouter 返回 422 `Invalid input`，并指出缺的字段，例如 `questions.team.instructions`。
