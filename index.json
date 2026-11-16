@@ -1207,11 +1207,11 @@
           "auth": "api_key",
           "readme": {
             "path": "plugins/tasks/nyaasuki_decision/README.md",
-            "sha256": "e23980358cc57b67e76422f607f020bb62cf12ea6a5d7c4086f0be0d8345e284",
+            "sha256": "851b69241d9780e287399643571b014e7e2d9d7bb2b567d1a962aee7b5c9d2c6",
             "translations": {
               "zh-CN": {
                 "path": "plugins/tasks/nyaasuki_decision/README.zh-CN.md",
-                "sha256": "e36d67cd44e2e72ab16e198077640251f40e096f16cdf1fbc654c6236d5b3f30"
+                "sha256": "6221c40418e1d952012a9b88ce59368c7c71aa0b1b5f781c4037d10b6b8d510c"
               }
             }
           },

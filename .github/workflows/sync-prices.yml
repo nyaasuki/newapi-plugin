@@ -1,0 +1,58 @@
+name: sync-prices
+
+# Keeps pricing/nyaasuki_decision.json, the price feed New API's upstream price
+# sync reads, in step with OpenRouter's decision model catalog. Commits only
+# when a price changed. When the model whitelist itself differs, it opens an
+# issue instead, because that needs a new plugin version.
+on:
+  schedule:
+    - cron: "17 2 * * *" # daily, 02:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: sync-prices
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      ISSUE_TITLE: "OpenRouter Decision: model whitelist differs from the OpenRouter catalog"
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - name: Sync the price feed
+        id: sync
+        env:
+          REPORT_FILE: ${{ runner.temp }}/whitelist-report.md
+        run: bash tools/decision/sync-prices-ci.sh
+
+      - name: Report whitelist changes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPORT_FILE: ${{ runner.temp }}/whitelist-report.md
+          WHITELIST: ${{ steps.sync.outputs.whitelist }}
+        run: |
+          issue=$(gh issue list --state open --search "in:title \"$ISSUE_TITLE\"" --json number,title \
+            --jq "map(select(.title == env.ISSUE_TITLE)) | .[0].number // empty")
+          if [ "$WHITELIST" = "changed" ]; then
+            if [ -n "$issue" ]; then
+              gh issue edit "$issue" --body-file "$REPORT_FILE"
+              echo "updated issue #$issue"
+            else
+              gh issue create --title "$ISSUE_TITLE" --body-file "$REPORT_FILE"
+            fi
+          elif [ -n "$issue" ]; then
+            gh issue close "$issue" --comment "The whitelist matches OpenRouter's catalog again."
+            echo "closed issue #$issue"
+          else
+            echo "whitelist matches the catalog"
+          fi

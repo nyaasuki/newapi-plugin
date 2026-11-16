@@ -96,7 +96,7 @@ https://raw.githubusercontent.com/nyaasuki/newapi-plugin/main/pricing/nyaasuki_d
 3. 获取价格，勾选要采用的模型，然后应用。
 
 价格源按 OpenRouter 标价对输入 token 计费，有按次费用的模型再加上按次费用。`gemini-decision-1` 和 `gpt-6-luna-decisions` 按 OpenRouter 实际费用计费，因为只有这样才包含联网搜索费用。免费模型不收费。同步时价格原样导入，需要加价的话，同步后再修改。
-OpenRouter 调价后再同步一次即可。已从 OpenRouter 目录下架的模型，在价格源里保留最后一次的价格。
+价格源每天按 OpenRouter 目录自动更新，再同步一次就能拿到 OpenRouter 的最新价格。已从 OpenRouter 目录下架的模型，在价格源里保留最后一次的价格。
 通过 New API (60) 渠道接入本站的下游网关，可以用 `pricing` 接口从本站同步价格。
 
 ## 示例

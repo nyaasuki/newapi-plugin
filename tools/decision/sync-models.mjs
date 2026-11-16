@@ -388,10 +388,16 @@ async function main() {
     writeFeed(feed);
     console.log("updated " + FEED_PATH + " (" + Object.keys(feed.data.billing_expr).length + " models)");
   }
-  writeFileSync(
-    join(here, "pricing.suggested.json"),
-    JSON.stringify({ snapshot: args.date, plugin: PLUGIN_KEY, models: suggestedPricing(priced) }, null, 2) + "\n",
-  );
+  // Rewrite the suggestions only when they change, so a run without price
+  // changes leaves the repository as it was.
+  const suggestedPath = join(here, "pricing.suggested.json");
+  const suggested = JSON.parse(JSON.stringify(suggestedPricing(priced)));
+  let previousSuggested = null;
+  try {
+    previousSuggested = JSON.parse(readFileSync(suggestedPath, "utf8")).models;
+  } catch {}
+  if (JSON.stringify(previousSuggested) !== JSON.stringify(suggested))
+    writeFileSync(suggestedPath, JSON.stringify({ snapshot: args.date, plugin: PLUGIN_KEY, models: suggested }, null, 2) + "\n");
 }
 
 main().catch((error) => {

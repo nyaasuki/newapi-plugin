@@ -103,7 +103,9 @@ node tools/decision/sync-models.mjs             # 同步白名单（只改未发
 node test/decision/e2e/run.mjs --server http://127.0.0.1:13000 --relay http://127.0.0.1:13001 --real
 ```
 
-**价格同步**：`pricing/nyaasuki_decision.json` 是 New API `/api/ratio_config` 格式的价格源，覆盖白名单里的全部模型（任务用量表达式）。站点在「上游价格同步」里选 OpenRouter Decision 渠道，接口选 custom，填 `https://raw.githubusercontent.com/nyaasuki/newapi-plugin/main/pricing/nyaasuki_decision.json` 即可导入全部价格（详见[插件 README](plugins/tasks/nyaasuki_decision/README.zh-CN.md)）。价格源不属于插件版本，OpenRouter 调价时运行 `--pricing` 并提交即可，不需要发布新版本；已下架的模型保留最后一次的价格。
+**价格同步**：`pricing/nyaasuki_decision.json` 是 New API `/api/ratio_config` 格式的价格源，覆盖白名单里的全部模型（任务用量表达式）。站点在「上游价格同步」里选 OpenRouter Decision 渠道，接口选 custom，填 `https://raw.githubusercontent.com/nyaasuki/newapi-plugin/main/pricing/nyaasuki_decision.json` 即可导入全部价格（详见[插件 README](plugins/tasks/nyaasuki_decision/README.zh-CN.md)）。价格源不属于插件版本，调价不需要发布新版本；已下架的模型保留最后一次的价格。
+
+**每日自动同步**：`.github/workflows/sync-prices.yml` 每天 02:17 UTC（北京时间 10:17）运行 `tools/decision/sync-prices-ci.sh`：按 OpenRouter 目录重建价格源，只有价格变化时才提交并推送（提交者为 github-actions[bot]）。如果 OpenRouter 的模型列表和插件白名单不一致（上架新模型或下架旧模型），它会开一个 issue 说明差异，因为改白名单需要发布新的插件版本；一致后 issue 会自动关闭。也可以在 GitHub 的 Actions 页面手动运行（Run workflow）。
 
 Decision 的白名单以 OpenRouter 官方目录 `https://openrouter.ai/api/v1/models?output_modalities=decisions` 为准，只收录可通过 Decisions API 调用的模型；New API 侧的模型名是去掉厂商前缀的 OpenRouter ID（`liquid/d1.1` → `d1.1`）。模型上架或下架时：复制最新版本目录为新版本并改 `meta.version`，运行同步脚本，更新 README 模型表和 CHANGELOG，最后重新生成索引。同步脚本不会改写已发布（sha256 已在 `index.json` 中）的 `plugin.js`。
 
