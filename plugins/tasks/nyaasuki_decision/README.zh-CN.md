@@ -83,6 +83,22 @@ TypeSafe 插件也声明了 `jev-latest`。两个插件都安装时，`jev-lates
 `gemini-decision-1` 和 `gpt-6-luna-decisions` 的联网搜索单独收费，建议按 OpenRouter 费用计费。
 请求到达时，网关按该模型的完整上下文和标价预扣额度。OpenRouter 返回结果后，按它报告的用量结算。
 
+### 价格同步
+
+40 个模型的价格可以用 New API 的上游价格同步导入，不必逐个填写。本仓库按 OpenRouter 官方目录生成了一份价格源，格式与 New API 的 `/api/ratio_config` 相同：
+
+```text
+https://raw.githubusercontent.com/nyaasuki/newapi-plugin/main/pricing/nyaasuki_decision.json
+```
+
+1. 在 New API 的模型价格设置里打开上游价格同步，选择 OpenRouter Decision 渠道。
+2. 把该渠道的接口设为 custom，填入上面的价格源地址。
+3. 获取价格，勾选要采用的模型，然后应用。
+
+价格源按 OpenRouter 标价对输入 token 计费，有按次费用的模型再加上按次费用。`gemini-decision-1` 和 `gpt-6-luna-decisions` 按 OpenRouter 实际费用计费，因为只有这样才包含联网搜索费用。免费模型不收费。同步时价格原样导入，需要加价的话，同步后再修改。
+OpenRouter 调价后再同步一次即可。已从 OpenRouter 目录下架的模型，在价格源里保留最后一次的价格。
+通过 New API (60) 渠道接入本站的下游网关，可以用 `pricing` 接口从本站同步价格。
+
 ## 示例
 
 ```bash

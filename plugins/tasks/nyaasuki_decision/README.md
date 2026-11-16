@@ -84,6 +84,22 @@ Each model has two price fields: "Input token unit price" and "Price per USD of 
 `gemini-decision-1` and `gpt-6-luna-decisions` charge web searches separately, so bill them by OpenRouter cost.
 When the request arrives, the gateway reserves quota for the model's full context at list price. When OpenRouter answers, the gateway settles the charge on the usage OpenRouter reports.
 
+### Price sync
+
+The prices of all 40 models can come from New API's upstream price sync instead of being typed in. The repository publishes a price feed in the format of New API's `/api/ratio_config`, rebuilt from OpenRouter's catalog:
+
+```text
+https://raw.githubusercontent.com/nyaasuki/newapi-plugin/main/pricing/nyaasuki_decision.json
+```
+
+1. Open the price sync in New API's model pricing settings and select the OpenRouter Decision channel.
+2. Set the channel's endpoint to custom and enter the feed address above.
+3. Fetch, select the models to take, and apply.
+
+The feed bills each model by input tokens at OpenRouter's list price, plus the per-request fee where there is one. `gemini-decision-1` and `gpt-6-luna-decisions` are billed at the OpenRouter cost, because only that includes their web searches. Free models cost nothing. The prices are taken as they are; to add a markup, edit them after syncing.
+Run the sync again when OpenRouter changes its prices. A model that has left OpenRouter's catalog keeps its last price in the feed.
+A gateway that reaches this one through a New API (60) channel can sync from it with the `pricing` endpoint.
+
 ## Example
 
 ```bash

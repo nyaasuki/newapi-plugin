@@ -47,7 +47,8 @@ plugins/tasks/<key>/<version>/CHANGELOG.zh-CN.md  中文翻译
 plugins/tasks/<key>/README.md / README.zh-CN.md   插件使用说明，所有版本共用
 index.json                                        市场索引，由 tools/pluginindex 生成，勿手改
 tools/pluginindex/                                官方索引生成器（来自 QuantumNous/new-api-plugins，Apache-2.0）
-tools/decision/                                   OpenRouter Decision 的白名单同步脚本、目录快照和建议定价
+tools/decision/                                   OpenRouter Decision 的白名单 / 价格同步脚本、目录快照和建议定价
+pricing/nyaasuki_decision.json                    OpenRouter Decision 的价格源，供 New API 上游价格同步使用
 test/apimart/                                     APIMart 的钩子测试和 golden fixture
 test/decision/e2e/                                OpenRouter Decision 的端到端测试（真实 New API + 模拟 OpenRouter）
 test/marketplace/install.mjs                      模拟从本仓库市场源安装全部插件
@@ -96,12 +97,17 @@ node test/apimart/golden.mjs   # 回放 golden fixture
 OpenRouter Decision：
 
 ```bash
-node tools/decision/sync-models.mjs --check   # 白名单是否与 OpenRouter 官方目录一致
-node tools/decision/sync-models.mjs           # 同步白名单（写入最新版本的 plugin.js）
+node tools/decision/sync-models.mjs --check     # 白名单和价格源是否与 OpenRouter 官方目录一致
+node tools/decision/sync-models.mjs --pricing   # 只更新价格源 pricing/nyaasuki_decision.json
+node tools/decision/sync-models.mjs             # 同步白名单（只改未发布的新版本 plugin.js）并更新价格源
 node test/decision/e2e/run.mjs --server http://127.0.0.1:13000 --relay http://127.0.0.1:13001 --real
 ```
 
-Decision 的白名单以 OpenRouter 官方目录 `https://openrouter.ai/api/v1/models?output_modalities=decisions` 为准，只收录可通过 Decisions API 调用的模型；New API 侧的模型名是去掉厂商前缀的 OpenRouter ID（`liquid/d1.1` → `d1.1`）。模型上架或下架时：复制最新版本目录为新版本并改 `meta.version`，运行同步脚本，更新 README 模型表和 CHANGELOG，最后重新生成索引。
+**价格同步**：`pricing/nyaasuki_decision.json` 是 New API `/api/ratio_config` 格式的价格源，覆盖白名单里的全部模型（任务用量表达式）。站点在「上游价格同步」里选 OpenRouter Decision 渠道，接口选 custom，填 `https://raw.githubusercontent.com/nyaasuki/newapi-plugin/main/pricing/nyaasuki_decision.json` 即可导入全部价格（详见[插件 README](plugins/tasks/nyaasuki_decision/README.zh-CN.md)）。价格源不属于插件版本，OpenRouter 调价时运行 `--pricing` 并提交即可，不需要发布新版本；已下架的模型保留最后一次的价格。
+
+Decision 的白名单以 OpenRouter 官方目录 `https://openrouter.ai/api/v1/models?output_modalities=decisions` 为准，只收录可通过 Decisions API 调用的模型；New API 侧的模型名是去掉厂商前缀的 OpenRouter ID（`liquid/d1.1` → `d1.1`）。模型上架或下架时：复制最新版本目录为新版本并改 `meta.version`，运行同步脚本，更新 README 模型表和 CHANGELOG，最后重新生成索引。同步脚本不会改写已发布（sha256 已在 `index.json` 中）的 `plugin.js`。
+
+`node test/decision/e2e/price-sync.mjs --server http://127.0.0.1:13000 --relay http://127.0.0.1:13001` 测试价格同步：按后台的调用方式从价格源同步并应用全部价格、核对实际扣费，再让 B 从 A 的 `/api/pricing` 同步（加 `--feed <url>` 测线上价格源）。
 
 端到端测试需要两台全新的 New API（13000、13001），会在本地 18080 端口启动一个模拟的 OpenRouter；`--real` 会用无效密钥真实请求一次 openrouter.ai，期望拿到 401。
 
