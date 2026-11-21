@@ -1,5 +1,5 @@
 {
-  "snapshot": "2026-11-16",
+  "snapshot": "2026-11-21",
   "plugin": "nyaasuki_decision",
   "models": {
     "classify-1": {
@@ -166,20 +166,20 @@
     },
     "heygen-decision-1": {
       "openrouter_id": "heygen/heygen-decision-1",
-      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.14 / 1000000)",
+      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.07 / 1000000)",
       "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
       "list_price": {
-        "input_per_million_usd": 0.14,
+        "input_per_million_usd": 0.07,
         "per_request_usd": 0,
         "per_web_search_usd": 0
       }
     },
     "heygen-decision-1-turbo": {
       "openrouter_id": "heygen/heygen-decision-1-turbo",
-      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.09 / 1000000)",
+      "by_input_tokens": "tier(\"base\", u(\"input_tokens\") * 0.042000000003 / 1000000)",
       "by_upstream_cost": "tier(\"base\", u(\"upstream_cost\"))",
       "list_price": {
-        "input_per_million_usd": 0.09,
+        "input_per_million_usd": 0.042000000003,
         "per_request_usd": 0,
         "per_web_search_usd": 0
       }

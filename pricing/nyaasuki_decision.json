@@ -2,7 +2,7 @@
   "success": true,
   "message": "",
   "plugin": "nyaasuki_decision",
-  "snapshot": "2026-11-16",
+  "snapshot": "2026-11-21",
   "source": "https://openrouter.ai/api/v1/models?output_modalities=decisions",
   "data": {
     "billing_mode": {
@@ -63,8 +63,8 @@
       "elephant-1": "tier(\"base\", u(\"input_tokens\") * 0.035 / 1000000)",
       "gemini-decision-1": "tier(\"base\", u(\"upstream_cost\"))",
       "gpt-6-luna-decisions": "tier(\"base\", u(\"upstream_cost\"))",
-      "heygen-decision-1": "tier(\"base\", u(\"input_tokens\") * 0.14 / 1000000)",
-      "heygen-decision-1-turbo": "tier(\"base\", u(\"input_tokens\") * 0.09 / 1000000)",
+      "heygen-decision-1": "tier(\"base\", u(\"input_tokens\") * 0.07 / 1000000)",
+      "heygen-decision-1-turbo": "tier(\"base\", u(\"input_tokens\") * 0.042000000003 / 1000000)",
       "jev-1.13": "tier(\"base\", u(\"input_tokens\") * 0.042 / 1000000)",
       "jev-1.14": "tier(\"base\", u(\"input_tokens\") * 0.042 / 1000000)",
       "jev-latest": "tier(\"base\", u(\"input_tokens\") * 0.042 / 1000000)",
